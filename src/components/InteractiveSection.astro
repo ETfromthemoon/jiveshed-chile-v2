@@ -1,0 +1,34 @@
+---
+interface Props {
+  id: string;
+  imageUrl?: string;       // legacy / not used
+  overlayColor: string;
+  label?: string;
+}
+
+const { id, overlayColor, label } = Astro.props;
+---
+
+<div
+  class="interactive-section"
+  id={`panel-${id}`}
+  role="region"
+  aria-label={label ?? id}
+>
+  <!-- Color overlay encima del global-bg persistente -->
+  <div class="section-bg-overlay" style={`background:${overlayColor}`} aria-hidden="true"></div>
+
+  <!-- Content -->
+  <div class="section-panel-content photo-text-shadow">
+    <slot />
+  </div>
+</div>
+
+<style>
+  .section-bg-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+  }
+</style>

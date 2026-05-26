@@ -1,0 +1,107 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer id="ultra-footer" aria-label="Site footer">
+  <div class="ft-inner">
+    <span class="ft-brand">JIVESHED</span>
+    <span class="ft-sep" aria-hidden="true"></span>
+    <span class="ft-year">© {year}</span>
+    <span class="ft-divider" aria-hidden="true"></span>
+    <a href="mailto:hello@jiveshed.com" class="ft-link">hello@jiveshed.com</a>
+    <span class="ft-sep" aria-hidden="true"></span>
+    <a href="tel:6179383495" class="ft-link">617·938·3495</a>
+    <span class="ft-divider ft-divider-right" aria-hidden="true"></span>
+    <span class="ft-tagline">From attention <em>to action.</em></span>
+  </div>
+</footer>
+
+<style>
+#ultra-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: var(--footer-h);
+  z-index: 230;
+  background: rgba(0,0,0,0.95);
+  border-top: 1px solid rgba(255,255,255,0.15);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+@media (max-width: 1023px) {
+  #ultra-footer { display: none; }
+}
+
+.ft-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  gap: 0.75rem;
+  padding: 0 1.25rem;
+}
+
+.ft-brand {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 0.65rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.ft-year {
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.12em;
+  color: rgba(255,255,255,0.65);
+}
+
+.ft-sep {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.45);
+  flex-shrink: 0;
+}
+
+.ft-divider {
+  width: 1px;
+  height: 14px;
+  background: rgba(255,255,255,0.28);
+  flex-shrink: 0;
+}
+
+.ft-link {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  color: rgba(255,255,255,0.85);
+  text-decoration: none;
+  transition: color 0.2s ease;
+  white-space: nowrap;
+}
+.ft-link:hover { color: var(--js-coral); }
+
+.ft-tagline {
+  font-family: var(--font-serif);
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.7);
+  font-style: normal;
+  white-space: nowrap;
+}
+.ft-tagline em {
+  font-style: italic;
+  color: #fff;
+}
+
+@media (max-width: 900px) {
+  .ft-tagline, .ft-divider-right { display: none; }
+}
+@media (max-width: 500px) {
+  .ft-link:last-of-type, .ft-sep:last-of-type { display: none; }
+}
+</style>

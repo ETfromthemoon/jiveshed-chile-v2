@@ -1,0 +1,492 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    /* ── Layout Dimensions ────────────────── */
+    --rail-w:          56px;
+    --micro-h:         32px;
+    --micro-h-mobile:  44px;
+    --footer-h:        44px;
+    --footer-h-mobile: 36px;
+    --btab-h:          60px;
+
+    /* ── B&N Design Tokens ─────────────────── */
+    --bg:           #000000;
+    --bg-2:         #0A0A0A;
+    --surface:      #111111;
+    --border:       rgba(255, 255, 255, 0.1);
+    --border-mid:   rgba(255, 255, 255, 0.16);
+    --fg:           #FFFFFF;
+    --fg-2:         #F5F5F5;
+    --muted:        #737373;
+    --muted-dim:    #404040;
+
+    /* ── JiveShed Rebrand Palette (2026-05) ── */
+    /* Source: 20260511 JiveShed Rebrand Text — Color direction */
+    --js-electric-blue:  #1B4DFF;   /* intelligence, technology, performance */
+    --js-charcoal:       #0E0E12;   /* premium, agency, confidence */
+    --js-coral:          #FF6B3D;   /* Chilean energy, action, conversion */
+    --js-off-white:      #F5F2EC;   /* clarity, readability */
+    --js-signal-green:   #25D366;   /* WhatsApp, leads, growth cues */
+
+    /* Section overlays — derived from rebrand palette (0.20 alpha — ethereal bg dominates) */
+    --js-overlay-blue:    rgba(14, 32, 110, 0.20);   /* Electric Blue */
+    --js-overlay-charcoal:rgba(14, 14, 18, 0.20);    /* Deep Black / Charcoal */
+    --js-overlay-green:   rgba(7, 56, 32, 0.20);     /* Signal Green */
+    --js-overlay-coral:   rgba(78, 26, 10, 0.20);    /* Warm Coral */
+
+    /* Light sections */
+    --bg-light:          #FFFFFF;
+    --surface-light:     #F5F5F5;
+    --border-light:      rgba(0, 0, 0, 0.1);
+    --border-light-mid:  rgba(0, 0, 0, 0.16);
+    --fg-light:          #000000;
+    --muted-light:       #737373;
+    --muted-light-dim:   #A3A3A3;
+
+    /* ── Typography ────────────────────────── */
+    --font-display: 'Inter', system-ui, sans-serif;
+    --font-serif:   'Crimson Text', Georgia, serif;
+    --font-mono:    'Space Mono', 'Courier New', monospace;
+  }
+
+  * { box-sizing: border-box; }
+
+  html {
+    scroll-behavior: smooth;
+    background-color: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-display);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    cursor: none;
+    overflow: hidden;
+    height: 100dvh;
+  }
+
+  body {
+    margin: 0;
+    background-color: var(--bg);
+    overflow: hidden;
+    height: 100dvh;
+  }
+
+  ::selection {
+    background-color: #ffffff;
+    color: #000000;
+  }
+
+  ::-webkit-scrollbar { width: 2px; }
+  ::-webkit-scrollbar-track { background: #000; }
+  ::-webkit-scrollbar-thumb { background: #333; }
+
+  /* Touch devices: restore native cursor */
+  @media (pointer: coarse) {
+    html { cursor: auto; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer utilities {
+  /* ── Layout ─────────────────────────────── */
+  .section-padding {
+    padding-top: clamp(5rem, 10vw, 10rem);
+    padding-bottom: clamp(5rem, 10vw, 10rem);
+  }
+
+  .container-wide {
+    max-width: 1280px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  @media (min-width: 640px) {
+    .container-wide {
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .container-wide {
+      padding-left: calc(var(--rail-w) + 1.5rem);
+      padding-right: 1.5rem;
+    }
+  }
+
+  /* ── Scroll Reveal ───────────────────────── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(36px);
+    transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .reveal.revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .reveal-delay-1 { transition-delay: 0.08s; }
+  .reveal-delay-2 { transition-delay: 0.16s; }
+  .reveal-delay-3 { transition-delay: 0.26s; }
+  .reveal-delay-4 { transition-delay: 0.36s; }
+  .reveal-delay-5 { transition-delay: 0.46s; }
+
+  /* ── Text Reveal (clip slide) ────────────── */
+  .text-reveal {
+    overflow: hidden;
+    display: block;
+  }
+  .text-reveal-inner {
+    display: block;
+    transform: translateY(110%);
+    transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .text-reveal.revealed .text-reveal-inner {
+    transform: translateY(0);
+  }
+  .text-reveal.revealed-delay-1 .text-reveal-inner { transition-delay: 0.1s; }
+  .text-reveal.revealed-delay-2 .text-reveal-inner { transition-delay: 0.22s; }
+
+  /* ── Line Draw ───────────────────────────── */
+  .line-draw {
+    width: 0 !important;
+    transition: width 1.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  }
+  .line-draw.revealed {
+    width: 100% !important;
+  }
+
+  /* ── Labels / Tags ───────────────────────── */
+  .label-mono {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.625rem;
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    font-weight: 400;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted-dim);
+  }
+  .label-mono-light {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.625rem;
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    font-weight: 400;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted-light);
+  }
+
+  /* ── Marquee ─────────────────────────────── */
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    animation: marquee 28s linear infinite;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .marquee-track { animation-play-state: paused; }
+  }
+
+  /* ── Custom Cursor ───────────────────────── */
+  .cursor-dot {
+    position: fixed;
+    top: 0; left: 0;
+    width: 7px; height: 7px;
+    background: #ffffff;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    mix-blend-mode: difference;
+    transition: width 0.25s ease, height 0.25s ease;
+    will-change: transform;
+  }
+  .cursor-ring {
+    position: fixed;
+    top: 0; left: 0;
+    width: 38px; height: 38px;
+    border: 1px solid rgba(255, 255, 255, 0.45);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    mix-blend-mode: difference;
+    transition: width 0.35s ease, height 0.35s ease, opacity 0.35s ease;
+    will-change: transform;
+  }
+  .cursor-ring.is-hovering {
+    width: 60px; height: 60px;
+    opacity: 0.6;
+  }
+  .cursor-dot.is-hovering {
+    width: 4px; height: 4px;
+  }
+  @media (pointer: coarse) {
+    .cursor-dot, .cursor-ring { display: none; }
+  }
+}
+
+/* ── Keyframes ────────────────────────────── */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in    { animation: fadeIn 0.5s ease both; }
+.animate-fade-in-up { animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) both; }
+
+/* ── Global persistent background ───────────
+   Único Ethereal Shadow detrás de todo el sitio.
+   Los paneles y secciones quedan transparentes;
+   solo sus overlays de color tintan este fondo. */
+#global-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background: #000;
+  pointer-events: none;
+}
+
+/* ── Interactive Section System ─────────── */
+.interactive-section {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: var(--footer-h);
+  z-index: 200;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+}
+
+@media (max-width: 1023px) {
+  .interactive-section {
+    bottom: var(--btab-h);
+  }
+}
+
+.interactive-section.is-active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.section-bg-photo {
+  position: fixed;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 0;
+}
+.section-bg-photo::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--section-overlay);
+}
+
+.section-panel-content {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  overflow: hidden;
+  padding-top: clamp(1.25rem, 5vw, 3.5rem);
+  padding-bottom: clamp(1.25rem, 4vw, 3rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+@media (min-width: 640px) {
+  .section-panel-content {
+    padding-top: clamp(2rem, 5vw, 3.5rem);
+    padding-bottom: clamp(2rem, 4vw, 3rem);
+  }
+}
+
+/* ── Mobile/Tablet: scroll vertical interno por panel ─────────
+   El contenido nunca se corta. La navegación entre paneles
+   queda exclusivamente en las tabs (no más swipe vertical). */
+@media (max-width: 1023px) {
+  .section-panel-content {
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;          /* no rebota a la página padre */
+    justify-content: flex-start;            /* contenido fluye desde arriba */
+    /* reserva espacio para tabs bar + bottom tabs */
+    padding-bottom: calc(var(--btab-h) + 4rem);
+    scroll-behavior: smooth;
+  }
+  /* scrollbar discreta dentro del panel */
+  .section-panel-content::-webkit-scrollbar { width: 3px; }
+  .section-panel-content::-webkit-scrollbar-track { background: transparent; }
+  .section-panel-content::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.18); border-radius: 2px; }
+}
+
+/* Close button for interactive panels */
+.section-close-btn {
+  position: fixed;
+  top: 1.25rem;
+  right: 1.25rem;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.4);
+  border: 1px solid rgba(255,255,255,0.25);
+  color: #fff;
+  cursor: pointer;
+  z-index: 210;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+.section-close-btn:hover {
+  background: rgba(0,0,0,0.6);
+  border-color: rgba(255,255,255,0.5);
+}
+
+/* Section tabs bar — fixed bottom navigation */
+.section-tabs-bar {
+  position: fixed;
+  bottom: var(--footer-h);
+  left: 0;
+  right: 0;
+  z-index: 300;
+  display: flex;
+  justify-content: center;
+  padding: 0 1rem 0.5rem 1rem;
+  pointer-events: none;
+}
+
+@media (max-width: 1023px) {
+  .section-tabs-bar {
+    bottom: var(--btab-h);
+  }
+}
+.tabs-inner {
+  display: flex;
+  overflow-x: auto;
+  scrollbar-width: none;
+  background: rgba(0,0,0,0.88);
+  border: 1px solid rgba(255,255,255,0.22);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  pointer-events: all;
+  box-shadow: 0 -1px 0 rgba(255,255,255,0.08), 0 8px 32px rgba(0,0,0,0.6);
+}
+.tabs-inner::-webkit-scrollbar { display: none; }
+
+.tab-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1.75rem;
+  flex-shrink: 0;
+  background: transparent;
+  border: none;
+  border-right: 1px solid rgba(255,255,255,0.14);
+  color: rgba(255,255,255,0.82);
+  cursor: pointer;
+  transition: color 0.25s ease, background 0.25s ease;
+}
+.tab-btn:last-child { border-right: none; }
+.tab-btn:hover { color: #fff; background: rgba(255,255,255,0.10); }
+.tab-btn.is-active { background: var(--js-coral); color: #fff; }
+
+.tab-num {
+  font-family: var(--font-mono);
+  font-size: 0.5rem;
+  letter-spacing: 0.08em;
+  opacity: 0.7;
+}
+.tab-btn.is-active .tab-num { color: rgba(255,255,255,0.85); opacity: 1; }
+
+.tab-label {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* Text contrast helpers for photo sections */
+.photo-text-shadow h1,
+.photo-text-shadow h2,
+.photo-text-shadow h3 {
+  text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+}
+
+/* PageHero with photo background */
+.page-hero-photo {
+  position: relative;
+  overflow: hidden;
+}
+.page-hero-photo-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  z-index: 0;
+}
+.page-hero-photo-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--hero-overlay, rgba(0,0,0,0.7));
+}
+.page-hero-photo > .container-wide {
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Touch-friendly CTAs (tablet & mobile) ─────────── */
+@media (max-width: 1023px) {
+  a[class*="cta"],
+  button[class*="cta"],
+  .hero-cta,
+  .hero-cta-outline,
+  .idx-svc-cta,
+  .idx-svc-cta-out,
+  .idx-chile-cta,
+  .idx-pkg-cta {
+    min-height: 44px;
+    font-size: 0.7rem !important;
+    padding-left: 1.25rem !important;
+    padding-right: 1.25rem !important;
+  }
+}
+
+/* ── Stats grid collapse on mobile ─────────────────── */
+@media (max-width: 639px) {
+  .stats-grid-4 {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}

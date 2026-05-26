@@ -1,0 +1,282 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import InteractiveSection from '../../components/InteractiveSection.astro';
+import Footer from '../../components/Footer.astro';
+
+/* ─────────────────────────────────────────────────────────────
+   /system/ — The JiveShed System
+   Contenido reubicado desde la homepage (paneles 2-6).
+   Doc "JIVESHED CONTENIDO v2.md" + "REBRAND AND VISUAL DIRECTION.md"
+   ───────────────────────────────────────────────────────────── */
+
+const problemLines = [
+  'You post on Instagram.',
+  'You have WhatsApp.',
+  'You have a Google profile.',
+  'Maybe you run ads.',
+  'But the system is leaking opportunities.',
+];
+const problemConsequences = [
+  { lead: 'Customers discover you,',  fail: 'but do not trust you.' },
+  { lead: 'They message you,',         fail: 'but are not followed up.' },
+  { lead: 'They buy once,',            fail: 'but never return.' },
+  { lead: 'You get reports,',          fail: 'but not decisions.' },
+];
+
+const systemSteps = [
+  { num: '01', label: 'Content' },
+  { num: '02', label: 'Ads' },
+  { num: '03', label: 'WhatsApp' },
+  { num: '04', label: 'Booking' },
+  { num: '05', label: 'CRM' },
+  { num: '06', label: 'Retention' },
+  { num: '07', label: 'Analytics' },
+];
+
+const industries = [
+  { num: '01', name: 'Hospitality',                   note: 'Restaurants, cafés, bars, hotels, tourism brands.' },
+  { num: '02', name: 'Medical',                       note: 'Specialists, private practices, aesthetic medicine.' },
+  { num: '03', name: 'Clinics & dental practices',    note: 'Multi-location clinics, dental groups, wellness centers.' },
+];
+
+const builds = [
+  { num: '01', name: 'Short-form video systems',                desc: 'Reels, TikToks, and Shorts built around hooks, trust, offers, and action.' },
+  { num: '02', name: 'WhatsApp lead engines',                   desc: 'Click-to-WhatsApp ads, quick replies, qualification flows, and follow-up.' },
+  { num: '03', name: 'Local SEO and Google Business Profile growth', desc: 'Get found when customers search for businesses like yours nearby.' },
+  { num: '04', name: 'Paid social campaigns',                   desc: 'Meta, TikTok, and LinkedIn ads designed for conversation and conversion.' },
+  { num: '05', name: 'AI integrated content workflows',         desc: 'Research, write, repurpose, segment, and ship faster — with human judgment.' },
+  { num: '06', name: 'CRM and retention systems',               desc: 'Recover lost opportunities and turn one-time buyers into repeat customers.' },
+  { num: '07', name: 'Social proof and review systems',         desc: 'Review request flows, response templates, and proof that earns trust.' },
+  { num: '08', name: 'Sales dashboards',                        desc: 'Cost-per-WhatsApp, booking rate, and decisions — not just reports.' },
+];
+---
+
+<Layout
+  title="The JiveShed System — How we turn attention into action"
+  description="The problem, the system, who we help, what we build, and why JiveShed. AI integrated speed with human judgment for Chilean businesses."
+  pageTabs={[
+    { id: 'problem',   label: 'The Problem' },
+    { id: 'system',    label: 'The System' },
+    { id: 'who',       label: 'Who We Help' },
+    { id: 'what',      label: 'What We Build' },
+    { id: 'why',       label: 'Why JiveShed' },
+    { id: 'cta',       label: 'Next Step' },
+  ]}
+>
+  <Nav />
+  <main>
+
+    <!-- ═══ PANEL 01: The Problem ═══ -->
+    <InteractiveSection
+      id="problem"
+      label="The Problem"
+      imageUrl=""
+      overlayColor="var(--js-overlay-coral)"
+    >
+      <div class="container-wide flex flex-col" style="gap:clamp(1.25rem,2.5vw,2rem)">
+        <div class="flex flex-wrap items-end justify-between gap-4">
+          <div>
+            <div class="label-mono reveal mb-3" style="color:rgba(255,255,255,0.5)">01 — The Problem</div>
+            <h2 class="reveal reveal-delay-1 font-bold leading-tight tracking-tight" style="font-size:clamp(1.75rem,4vw,3.25rem);color:#fff;letter-spacing:-0.02em">
+              Your business is visible, but <em style="font-family:var(--font-serif);font-weight:400;font-style:italic">not connected.</em>
+            </h2>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-12">
+          <div class="reveal reveal-delay-2 flex flex-col gap-2" style="padding:1.5rem;background:rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.12)">
+            {problemLines.map((line) => (
+              <p style="color:rgba(255,255,255,0.85);font-size:clamp(0.95rem,1.4vw,1.1rem);line-height:1.5">{line}</p>
+            ))}
+          </div>
+
+          <div class="reveal reveal-delay-3 flex flex-col" style="border-top:1px solid rgba(255,255,255,0.18)">
+            {problemConsequences.map((c) => (
+              <div class="grid items-center py-3 border-b" style="border-color:rgba(255,255,255,0.1);grid-template-columns:1fr auto 1fr;gap:0.75rem">
+                <p style="color:rgba(255,255,255,0.78);font-size:0.85rem;text-align:right">{c.lead}</p>
+                <span style="color:var(--js-coral);font-family:var(--font-mono);font-size:0.7rem">→</span>
+                <p class="font-bold" style="color:#fff;font-size:0.9rem;letter-spacing:-0.01em">{c.fail}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </InteractiveSection>
+
+    <!-- ═══ PANEL 02: The JiveShed System ═══ -->
+    <InteractiveSection
+      id="system"
+      label="The JiveShed System"
+      imageUrl=""
+      overlayColor="var(--js-overlay-blue)"
+    >
+      <div class="container-wide flex flex-col" style="gap:clamp(1.5rem,3vw,2.5rem)">
+        <div class="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-6 items-end">
+          <div>
+            <div class="label-mono reveal mb-3" style="color:rgba(255,255,255,0.5)">02 — The JiveShed System</div>
+            <h2 class="reveal reveal-delay-1 font-bold leading-tight tracking-tight" style="font-size:clamp(1.75rem,4vw,3.25rem);color:#fff;letter-spacing:-0.02em">
+              We connect the <em style="font-family:var(--font-serif);font-weight:400;font-style:italic">full customer journey.</em>
+            </h2>
+          </div>
+          <p class="reveal reveal-delay-2 hidden lg:block max-w-xs" style="color:rgba(255,255,255,0.65);font-size:0.8rem;border-left:1px solid rgba(255,255,255,0.2);padding-left:1rem">
+            Visibility → Trust → WhatsApp inquiry → Booking / sale → Follow-up → Retention.
+          </p>
+        </div>
+
+        <div class="reveal reveal-delay-2 flex flex-wrap items-stretch" style="gap:1px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.12)">
+          {systemSteps.map((s, i) => (
+            <div class="flex-1 flex flex-col items-start gap-2" style={`min-width:120px;padding:1rem 1.25rem;background:rgba(0,0,0,${0.35 + i * 0.04})`}>
+              <span style="font-family:var(--font-mono);font-size:0.55rem;letter-spacing:0.14em;color:rgba(255,255,255,0.4);font-weight:700">{s.num}</span>
+              <h3 class="font-bold leading-tight" style="font-size:clamp(0.85rem,1.3vw,1rem);color:#fff;letter-spacing:-0.01em">{s.label}</h3>
+            </div>
+          ))}
+        </div>
+
+        <p class="reveal reveal-delay-3" style="color:rgba(255,255,255,0.75);font-size:0.95rem;max-width:48rem">
+          Content → Ads → WhatsApp → Booking → CRM → Retention → Analytics.
+          One connected system instead of seven disconnected tools.
+        </p>
+      </div>
+    </InteractiveSection>
+
+    <!-- ═══ PANEL 03: Who We Help ═══ -->
+    <InteractiveSection
+      id="who"
+      label="Who We Help"
+      imageUrl=""
+      overlayColor="var(--js-overlay-green)"
+    >
+      <div class="container-wide flex flex-col" style="gap:clamp(1.5rem,3vw,2.5rem)">
+        <div>
+          <div class="label-mono reveal mb-3" style="color:rgba(255,255,255,0.5)">03 — Who We Help</div>
+          <h2 class="reveal reveal-delay-1 font-bold leading-tight tracking-tight" style="font-size:clamp(1.75rem,4vw,3.25rem);color:#fff;letter-spacing:-0.02em;max-width:48rem">
+            Built for industries where <em style="font-family:var(--font-serif);font-weight:400;font-style:italic">trust and follow-up</em> decide the sale.
+          </h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-px" style="background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.12)">
+          {industries.map((ind, i) => (
+            <div class={`reveal reveal-delay-${i+1} flex flex-col gap-3 p-6 md:p-7`} style="background:rgba(0,0,0,0.4)">
+              <span style="font-family:var(--font-mono);font-size:0.6rem;letter-spacing:0.14em;color:var(--js-signal-green);font-weight:700">{ind.num}</span>
+              <h3 class="font-bold leading-tight" style="font-size:clamp(1.05rem,1.7vw,1.3rem);color:#fff;letter-spacing:-0.01em">{ind.name}</h3>
+              <p class="leading-relaxed flex-1" style="color:rgba(255,255,255,0.72);font-size:0.85rem">{ind.note}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </InteractiveSection>
+
+    <!-- ═══ PANEL 04: What We Build ═══ -->
+    <InteractiveSection
+      id="what"
+      label="What We Build"
+      imageUrl=""
+      overlayColor="var(--js-overlay-charcoal)"
+    >
+      <div class="container-wide flex flex-col" style="gap:clamp(1.25rem,2.5vw,2rem)">
+        <div>
+          <div class="label-mono reveal mb-3" style="color:rgba(255,255,255,0.5)">04 — What We Build</div>
+          <h2 class="reveal reveal-delay-1 font-bold leading-tight tracking-tight" style="font-size:clamp(1.75rem,4vw,3.25rem);color:#fff;letter-spacing:-0.02em;max-width:52rem">
+            Eight building blocks. <em style="font-family:var(--font-serif);font-weight:400;font-style:italic">One growth system.</em>
+          </h2>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4" style="border-top:1px solid rgba(255,255,255,0.18)">
+          {builds.map((b, i) => (
+            <div
+              class={`reveal reveal-delay-${Math.min(i+1,4)} flex flex-col gap-2 py-4 px-3 border-b`}
+              style={`border-color:rgba(255,255,255,0.1);border-right:${(i+1)%4!==0 ? '1px solid rgba(255,255,255,0.1)' : 'none'}`}
+            >
+              <span style="font-family:var(--font-mono);font-size:0.55rem;letter-spacing:0.14em;color:var(--js-electric-blue);font-weight:700">{b.num}</span>
+              <h3 class="font-bold leading-tight" style="font-size:clamp(0.9rem,1.3vw,1.05rem);color:#fff;letter-spacing:-0.01em">{b.name}</h3>
+              <p class="leading-relaxed" style="color:rgba(255,255,255,0.65);font-size:0.78rem">{b.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </InteractiveSection>
+
+    <!-- ═══ PANEL 05: Why JiveShed ═══ -->
+    <InteractiveSection
+      id="why"
+      label="Why JiveShed"
+      imageUrl=""
+      overlayColor="var(--js-overlay-blue)"
+    >
+      <div class="container-wide flex flex-col" style="gap:clamp(1.5rem,3vw,2.5rem)">
+        <div>
+          <div class="label-mono reveal mb-3" style="color:rgba(255,255,255,0.5)">05 — Why JiveShed</div>
+          <h2 class="reveal reveal-delay-1 font-bold leading-tight tracking-tight" style="font-size:clamp(2rem,5vw,4rem);color:#fff;letter-spacing:-0.02em;max-width:52rem">
+            AI integrated speed. <em style="font-family:var(--font-serif);font-weight:400;font-style:italic">Human judgment.</em> Chilean market understanding.
+          </h2>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+          <div class="reveal reveal-delay-2 flex flex-col gap-3" style="padding:1.5rem;background:rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.12)">
+            <span style="font-family:var(--font-mono);font-size:0.6rem;letter-spacing:0.14em;color:var(--js-electric-blue);font-weight:700">AI INTEGRATED</span>
+            <h3 class="font-bold" style="font-size:clamp(1rem,1.6vw,1.25rem);color:#fff;letter-spacing:-0.01em">AI integrated workflows help us create, test, analyze, and automate faster.</h3>
+            <p style="color:rgba(255,255,255,0.7);font-size:0.85rem;line-height:1.6">
+              Research, write, repurpose, segment, automate, and report — at the speed your competitors can't match.
+            </p>
+          </div>
+          <div class="reveal reveal-delay-3 flex flex-col gap-3" style="padding:1.5rem;background:rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.12)">
+            <span style="font-family:var(--font-mono);font-size:0.6rem;letter-spacing:0.14em;color:var(--js-signal-green);font-weight:700">HUMANS</span>
+            <h3 class="font-bold" style="font-size:clamp(1rem,1.6vw,1.25rem);color:#fff;letter-spacing:-0.01em">Humans protect your brand, your tone, your offers, and your customer experience.</h3>
+            <p style="color:rgba(255,255,255,0.7);font-size:0.85rem;line-height:1.6">
+              Every message sounds right, every campaign fits the brand, every touchpoint feels professional and trustworthy.
+            </p>
+          </div>
+        </div>
+      </div>
+    </InteractiveSection>
+
+    <!-- ═══ PANEL 06: CTA — to packages or audit ═══ -->
+    <InteractiveSection
+      id="cta"
+      label="Next step"
+      imageUrl=""
+      overlayColor="var(--js-overlay-green)"
+    >
+      <div class="container-wide flex flex-col items-start justify-center" style="gap:clamp(1.5rem,3vw,2.5rem);min-height:60vh">
+        <div class="label-mono reveal" style="color:rgba(255,255,255,0.5)">Next step</div>
+        <h2 class="reveal reveal-delay-1 font-bold leading-tight tracking-tight" style="font-size:clamp(2.25rem,7vw,6rem);color:#fff;letter-spacing:-0.02em;max-width:64rem">
+          Ready to <em style="font-family:var(--font-serif);font-weight:400;font-style:italic">turn attention into action?</em>
+        </h2>
+        <p class="reveal reveal-delay-2" style="color:rgba(255,255,255,0.8);font-size:clamp(0.95rem,1.4vw,1.15rem);line-height:1.6;max-width:42rem">
+          See the five growth packages or book a free audit to find the right fit.
+        </p>
+
+        <div class="reveal reveal-delay-3 flex flex-wrap gap-3">
+          <a
+            href="/packages/"
+            class="sys-cta-primary inline-flex items-center gap-3 px-8 py-4"
+            style="background:var(--js-coral);color:#fff;font-family:var(--font-mono);font-size:0.65rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase"
+          >
+            See packages
+            <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+            </svg>
+          </a>
+          <a
+            href="mailto:hello@jiveshed.com?subject=JiveShed%20Growth%20Audit"
+            class="sys-cta-outline inline-flex items-center gap-3 px-8 py-4"
+            style="background:transparent;color:#fff;font-family:var(--font-mono);font-size:0.65rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;border:1px solid rgba(255,255,255,0.7)"
+          >
+            Book a growth audit
+          </a>
+        </div>
+      </div>
+    </InteractiveSection>
+
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .sys-cta-primary { transition: background 0.25s ease, color 0.25s ease, outline 0.25s ease; }
+  .sys-cta-primary:hover { background: transparent !important; color: #fff !important; outline: 1px solid var(--js-coral); }
+
+  .sys-cta-outline { transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease; }
+  .sys-cta-outline:hover { background: #fff !important; color: #000 !important; border-color: #fff !important; }
+</style>

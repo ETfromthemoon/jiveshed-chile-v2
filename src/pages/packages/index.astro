@@ -1,0 +1,387 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import InteractiveSection from '../../components/InteractiveSection.astro';
+import Footer from '../../components/Footer.astro';
+
+/* ─────────────────────────────────────────────────────────────
+   /packages/ — detalle de los 5 tiers
+   Contenido literal de "JIVESHED CONTENIDO v2.md" líneas 160-345
+   Spanish messages traducidos al inglés.
+   ───────────────────────────────────────────────────────────── */
+
+const packages = [
+  {
+    id: 'starter',
+    name: 'Starter',
+    price: '300,000',
+    positioning: 'Presence repair',
+    forWho: 'Small businesses that need to stop looking abandoned online.',
+    bestFor: 'Small local businesses',
+    promise: 'Get found, look professional, and make it easier for customers to contact you.',
+    includes: [
+      'Instagram or Facebook optimization',
+      'WhatsApp Business setup or cleanup',
+      'Google Business Profile cleanup',
+      '6–8 monthly posts/stories',
+      '2 short Films',
+      'AI-integrated captions',
+      'Basic review response templates',
+      'Monthly mini-report',
+      'Secret bonus',
+    ],
+    message: 'We organize your digital presence so customers find you, trust you, and message you.',
+    overlay: 'var(--js-overlay-charcoal)',
+    accent: 'rgba(255,255,255,0.85)',
+  },
+  {
+    id: 'bronze',
+    name: 'Bronze',
+    price: '750,000',
+    positioning: 'WhatsApp lead generation',
+    forWho: 'Businesses that want more WhatsApp messages and bookings.',
+    bestFor: 'Restaurants, salons, local shops, agents',
+    promise: 'Generate more real inquiries through content, Google, and WhatsApp.',
+    includes: [
+      'Instagram + Facebook content management',
+      'Google Business Profile weekly updates',
+      '12–16 monthly content pieces across all profiles',
+      '4–6 Reels or Shorts',
+      'WhatsApp quick replies',
+      'Review request flow for Google and others',
+      'Basic Meta click-to-WhatsApp campaign management',
+      'Monthly performance report',
+    ],
+    message: 'We create content and campaigns that turn visits into WhatsApp conversations.',
+    overlay: 'var(--js-overlay-green)',
+    accent: 'var(--js-signal-green)',
+  },
+  {
+    id: 'silver',
+    name: 'Silver',
+    price: '1,500,000',
+    positioning: 'Growth system',
+    forWho: 'Small Media Enterprises ready to grow systematically.',
+    bestFor: 'Serious SMEs',
+    promise: 'Turn social media into measurable bookings, quotes, and sales.',
+    includes: [
+      'Full monthly content strategy for the defined channel',
+      '20–28 monthly content pieces',
+      '8–12 Reels, TikToks, or Shorts',
+      'Meta ads management (ad budget not included)',
+      'WhatsApp lead funnel (ad budget not included)',
+      'CRM spreadsheet or simple pipeline',
+      'Local SEO actions',
+      'Review and social proof system',
+      'Email or WhatsApp nurture sequence',
+      'Biweekly reporting',
+    ],
+    message: 'We connect content, ads, WhatsApp, and follow-up to generate measurable bookings, quotes, and sales.',
+    overlay: 'var(--js-overlay-blue)',
+    accent: 'var(--js-electric-blue)',
+    popular: true,
+  },
+  {
+    id: 'platinum',
+    name: 'Platinum',
+    price: '5,000,000',
+    positioning: 'Growth pod',
+    forWho: 'Companies ready to scale.',
+    bestFor: 'Clinics, ecommerce, real estate teams, tourism brands, B2B',
+    promise: 'Scale acquisition with content, ads, CRM, automation, and analytics.',
+    includes: [
+      'Senior growth strategy',
+      'Full-funnel campaign planning',
+      '40–60 monthly content assets',
+      '12–20 short videos',
+      'Monthly production session',
+      'Meta/TikTok/LinkedIn campaign management',
+      'WhatsApp automation strategy',
+      'CRM integration support',
+      'Email/retention campaigns',
+      'Creator or UGC coordination',
+      'Weekly optimization',
+      'Executive dashboard',
+    ],
+    message: 'Your external growth pod: strategy, content, ads, automation, CRM, and analytics working together.',
+    overlay: 'var(--js-overlay-coral)',
+    accent: 'var(--js-coral)',
+  },
+  {
+    id: 'diamond',
+    name: 'Diamond',
+    price: '10,000,000',
+    positioning: 'Outsourced growth department',
+    forWho: 'Established businesses that want a full growth department.',
+    bestFor: 'Larger SMEs, chains, developers, established brands',
+    promise: 'Full-funnel AI-integrated growth across content, paid media, WhatsApp, CRM, and retention.',
+    includes: [
+      'Multi-channel strategy',
+      '60–100 monthly content assets',
+      '20–40 videos',
+      'Multi-location or multi-brand support',
+      'Advanced paid media testing',
+      'WhatsApp automation/API workflows',
+      'CRM and lifecycle marketing',
+      'LinkedIn ABM for B2B',
+      'Ecommerce or booking funnel optimization',
+      'Creator/influencer program',
+      'Advanced dashboards',
+      'Quarterly growth roadmap',
+      'Executive reporting',
+    ],
+    message: 'A complete AI-integrated digital growth department, without having to hire one internally.',
+    overlay: 'var(--js-overlay-charcoal)',
+    accent: '#fff',
+  },
+];
+
+const ladderTabs = [
+  { id: 'intro',    label: 'Intro' },
+  { id: 'ladder',   label: 'Compare' },
+  { id: 'starter',  label: 'Starter' },
+  { id: 'bronze',   label: 'Bronze' },
+  { id: 'silver',   label: 'Silver' },
+  { id: 'platinum', label: 'Platinum' },
+  { id: 'diamond',  label: 'Diamond' },
+  { id: 'cta',      label: 'Book Audit' },
+];
+---
+
+<Layout
+  title="Packages — JiveShed | From Starter to Diamond"
+  description="Five growth packages from $300,000 to $10,000,000 CLP per month. Starter, Bronze, Silver, Platinum, Diamond. AI-integrated growth systems for Chilean businesses."
+  pageTabs={ladderTabs}
+>
+  <Nav />
+  <main>
+
+    <!-- ═══ PANEL 01: Intro ═══ overview hero -->
+    <InteractiveSection
+      id="intro"
+      label="Choose your growth system"
+      imageUrl=""
+      overlayColor="var(--js-overlay-charcoal)"
+    >
+      <div class="container-wide flex flex-col items-start justify-center" style="gap:clamp(1.5rem,3vw,2.5rem);min-height:60vh">
+        <div class="label-mono reveal" style="color:rgba(255,255,255,0.5)">Packages</div>
+        <h1 class="reveal reveal-delay-1 font-bold leading-tight tracking-tight" style="font-size:clamp(2.25rem,7vw,6rem);color:#fff;letter-spacing:-0.02em;max-width:62rem">
+          Choose your <em style="font-family:var(--font-serif);font-weight:400;font-style:italic">growth system.</em>
+        </h1>
+        <p class="reveal reveal-delay-2" style="color:rgba(255,255,255,0.8);font-size:clamp(0.95rem,1.4vw,1.2rem);line-height:1.6;max-width:46rem">
+          Five tiers. From presence repair to a full AI-integrated growth department — designed so every business can start where it makes sense and scale when it's ready.
+        </p>
+
+        <!-- Tier highlight strip -->
+        <div class="reveal reveal-delay-3 grid grid-cols-2 sm:grid-cols-5 gap-px w-full" style="background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.12);margin-top:1rem">
+          {packages.map((pkg) => (
+            <a href={`#panel-${pkg.id}`} data-open-panel={pkg.id} class="intro-tier flex flex-col gap-1 p-4 text-center" style="background:rgba(0,0,0,0.4);text-decoration:none">
+              {pkg.popular && <span class="label-mono" style="color:var(--js-signal-green);margin-bottom:0.15rem">Popular</span>}
+              <h3 class="font-bold leading-tight tracking-tight" style={`font-size:clamp(0.95rem,1.5vw,1.2rem);color:${pkg.accent};letter-spacing:-0.01em`}>{pkg.name}</h3>
+              <span class="label-mono" style="color:rgba(255,255,255,0.5);font-size:0.5rem">${pkg.price}</span>
+            </a>
+          ))}
+        </div>
+
+        <div class="reveal flex flex-wrap gap-3" style="margin-top:0.5rem">
+          <button type="button" data-open-panel="ladder" class="intro-cta-primary inline-flex items-center gap-3 px-6 py-3" style="background:var(--js-coral);color:#fff;font-family:var(--font-mono);font-size:0.6rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;border:none;cursor:pointer">
+            Compare side-by-side
+            <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+            </svg>
+          </button>
+          <a href="mailto:hello@jiveshed.com?subject=JiveShed%20Growth%20Audit" class="intro-cta-outline inline-flex items-center gap-3 px-6 py-3" style="background:transparent;color:#fff;font-family:var(--font-mono);font-size:0.6rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;border:1px solid rgba(255,255,255,0.55)">
+            Not sure? Book an audit
+          </a>
+        </div>
+      </div>
+    </InteractiveSection>
+
+    <!-- ═══ PANEL 02: Ladder ═══ comparison table -->
+    <InteractiveSection
+      id="ladder"
+      label="Offer ladder"
+      imageUrl=""
+      overlayColor="var(--js-overlay-blue)"
+    >
+      <div class="container-wide flex flex-col" style="gap:clamp(1.25rem,2.5vw,2rem)">
+        <div class="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-6 items-end">
+          <div>
+            <div class="label-mono reveal mb-3" style="color:rgba(255,255,255,0.5)">Compare</div>
+            <h2 class="reveal reveal-delay-1 font-bold leading-tight tracking-tight" style="font-size:clamp(1.75rem,4vw,3.25rem);color:#fff;letter-spacing:-0.02em;max-width:48rem">
+              The <em style="font-family:var(--font-serif);font-weight:400;font-style:italic">offer ladder</em> side by side.
+            </h2>
+          </div>
+          <p class="reveal reveal-delay-2 text-sm self-end leading-relaxed max-w-xs" style="color:rgba(255,255,255,0.65);font-size:0.85rem">
+            Each row links to a deep view of that tier.
+          </p>
+        </div>
+
+        <div class="reveal reveal-delay-2" style="border-top:1px solid rgba(255,255,255,0.18)">
+          {/* Header row */}
+          <div class="hidden lg:grid items-center py-2" style="grid-template-columns:1fr 1.2fr 1.6fr 2fr;gap:1rem;border-bottom:1px solid rgba(255,255,255,0.1)">
+            <span class="label-mono" style="color:rgba(255,255,255,0.4)">Package</span>
+            <span class="label-mono" style="color:rgba(255,255,255,0.4)">Price</span>
+            <span class="label-mono" style="color:rgba(255,255,255,0.4)">Best for</span>
+            <span class="label-mono" style="color:rgba(255,255,255,0.4)">Core promise</span>
+          </div>
+          {packages.map((pkg) => (
+            <a href={`#panel-${pkg.id}`} data-open-panel={pkg.id} class="ladder-row grid items-center py-4 border-b" style="border-color:rgba(255,255,255,0.1);grid-template-columns:1fr 1.2fr 1.6fr 2fr;gap:1rem;cursor:pointer;text-decoration:none">
+              <div class="flex flex-col gap-1">
+                {pkg.popular && <span class="label-mono" style="color:var(--js-signal-green)">Popular</span>}
+                <h3 class="font-bold leading-tight tracking-tight" style={`font-size:clamp(1rem,1.8vw,1.5rem);color:${pkg.accent};letter-spacing:-0.01em`}>{pkg.name}</h3>
+                <span class="label-mono" style="color:rgba(255,255,255,0.4)">{pkg.positioning}</span>
+              </div>
+              <div class="flex flex-col">
+                <div class="flex items-baseline gap-0.5 flex-wrap">
+                  <span style="font-family:var(--font-mono);font-size:0.55rem;color:rgba(255,255,255,0.5)">$</span>
+                  <span class="font-bold leading-none tracking-tight" style="font-size:clamp(1rem,2vw,1.7rem);color:#fff;letter-spacing:-0.02em">{pkg.price}</span>
+                </div>
+                <span class="label-mono" style="color:rgba(255,255,255,0.4);margin-top:0.2rem">CLP/month</span>
+              </div>
+              <p class="hidden lg:block" style="color:rgba(255,255,255,0.7);font-size:0.85rem;line-height:1.55">{pkg.bestFor}</p>
+              <p class="hidden lg:block" style="color:rgba(255,255,255,0.85);font-size:0.9rem;line-height:1.55;font-weight:500">{pkg.promise}</p>
+            </a>
+          ))}
+        </div>
+
+        <p class="reveal" style="color:rgba(255,255,255,0.5);font-family:var(--font-mono);font-size:0.6rem;margin-top:0.5rem">
+          * Ad spend not included. IVA not included. Prices in CLP.
+        </p>
+      </div>
+    </InteractiveSection>
+
+    <!-- ═══ PANELS 02-06: each tier ═══ -->
+    {packages.map((pkg) => (
+      <InteractiveSection
+        id={pkg.id}
+        label={pkg.name}
+        imageUrl=""
+        overlayColor={pkg.overlay}
+      >
+        <div class="container-wide flex flex-col" style="gap:clamp(1.25rem,2.5vw,2rem)">
+
+          <!-- Header -->
+          <div class="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-6 items-end">
+            <div>
+              {pkg.popular && (
+                <div class="label-mono reveal mb-2" style="color:var(--js-signal-green)">Popular</div>
+              )}
+              <div class="label-mono reveal mb-3" style="color:rgba(255,255,255,0.5)">{pkg.positioning}</div>
+              <h2 class="reveal reveal-delay-1 font-bold leading-tight tracking-tight" style={`font-size:clamp(2rem,5.5vw,5rem);color:${pkg.accent};letter-spacing:-0.02em`}>
+                {pkg.name}
+              </h2>
+              <p class="reveal reveal-delay-2 mt-3" style="color:rgba(255,255,255,0.75);font-size:clamp(0.95rem,1.5vw,1.15rem);max-width:36rem">
+                For {pkg.forWho.charAt(0).toLowerCase() + pkg.forWho.slice(1)}
+              </p>
+            </div>
+            <div class="reveal reveal-delay-2 text-right">
+              <div class="flex items-baseline justify-start lg:justify-end gap-1 flex-wrap">
+                <span style="font-family:var(--font-mono);font-size:0.7rem;color:rgba(255,255,255,0.5)">$</span>
+                <span class="font-bold leading-none tracking-tight" style="font-size:clamp(1.75rem,4vw,3.5rem);color:#fff;letter-spacing:-0.02em">{pkg.price}</span>
+              </div>
+              <p style="font-family:var(--font-mono);font-size:0.6rem;color:rgba(255,255,255,0.5);margin-top:0.25rem;text-transform:uppercase;letter-spacing:0.14em">CLP / month</p>
+            </div>
+          </div>
+
+          <!-- Two-column: Includes + Message -->
+          <div class="grid grid-cols-1 lg:grid-cols-[1.5fr_1fr] gap-8 lg:gap-12">
+            <!-- Includes list -->
+            <div class="reveal reveal-delay-2">
+              <div class="label-mono mb-3" style="color:rgba(255,255,255,0.4)">Includes</div>
+              <ul class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2" style="list-style:none;padding:0">
+                {pkg.includes.map((item) => (
+                  <li class="flex items-start gap-2" style="color:rgba(255,255,255,0.85);font-size:0.85rem;line-height:1.5">
+                    <span style={`color:${pkg.accent};font-family:var(--font-mono);flex-shrink:0;margin-top:0.15rem`}>→</span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <!-- Message quote -->
+            <div class="reveal reveal-delay-3 flex flex-col gap-4" style="padding:1.5rem;background:rgba(0,0,0,0.35);border-left:2px solid;border-left-color:transparent">
+              <span style={`color:${pkg.accent};font-family:var(--font-mono);font-size:0.6rem;letter-spacing:0.14em;font-weight:700;text-transform:uppercase`}>Promise</span>
+              <blockquote class="font-bold" style="color:#fff;font-size:clamp(1rem,1.6vw,1.25rem);line-height:1.45;letter-spacing:-0.01em;margin:0">
+                "{pkg.message}"
+              </blockquote>
+              <a
+                href="mailto:hello@jiveshed.com?subject=JiveShed%20-%20Interested%20in%20the%20{pkg.name}%20package"
+                class="pkg-cta inline-flex items-center gap-2 px-5 py-3 mt-2"
+                style={`background:${pkg.accent};color:#000;font-family:var(--font-mono);font-size:0.6rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;align-self:flex-start`}
+              >
+                Choose {pkg.name}
+                <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </InteractiveSection>
+    ))}
+
+    <!-- ═══ FINAL CTA ═══ -->
+    <InteractiveSection
+      id="cta"
+      label="Book your audit"
+      imageUrl=""
+      overlayColor="var(--js-overlay-green)"
+    >
+      <div class="container-wide flex flex-col items-start justify-center" style="gap:clamp(1.5rem,3vw,2.5rem);min-height:60vh">
+        <div class="label-mono reveal" style="color:rgba(255,255,255,0.5)">Not sure which tier?</div>
+        <h2 class="reveal reveal-delay-1 font-bold leading-tight tracking-tight" style="font-size:clamp(2.25rem,7vw,6rem);color:#fff;letter-spacing:-0.02em;max-width:64rem">
+          Book your <em style="font-family:var(--font-serif);font-weight:400;font-style:italic">JiveShed Growth Audit.</em>
+        </h2>
+        <p class="reveal reveal-delay-2" style="color:rgba(255,255,255,0.8);font-size:clamp(0.95rem,1.4vw,1.15rem);line-height:1.6;max-width:42rem">
+          We'll review your current channels and recommend the package that fits — or build a custom plan. From attention to action.
+        </p>
+
+        <div class="reveal reveal-delay-3 flex flex-wrap gap-3">
+          <a
+            href="mailto:hello@jiveshed.com?subject=JiveShed%20Growth%20Audit"
+            class="final-cta inline-flex items-center gap-3 px-8 py-4"
+            style="background:var(--js-signal-green);color:#000;font-family:var(--font-mono);font-size:0.65rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase"
+          >
+            Request my audit
+            <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+            </svg>
+          </a>
+          <a
+            href="/"
+            class="final-cta-outline inline-flex items-center gap-3 px-8 py-4"
+            style="background:transparent;color:#fff;font-family:var(--font-mono);font-size:0.65rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;border:1px solid rgba(255,255,255,0.7)"
+          >
+            Back to home
+          </a>
+        </div>
+      </div>
+    </InteractiveSection>
+
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .ladder-row { transition: background 0.2s ease; }
+  .ladder-row:hover { background: rgba(255,255,255,0.05); }
+
+  .intro-tier { transition: background 0.2s ease, transform 0.2s ease; }
+  .intro-tier:hover { background: rgba(255,255,255,0.08) !important; }
+
+  .intro-cta-primary { transition: background 0.25s ease, color 0.25s ease, outline 0.25s ease; }
+  .intro-cta-primary:hover { background: transparent !important; color: #fff !important; outline: 1px solid var(--js-coral); }
+
+  .intro-cta-outline { transition: background 0.2s ease, border-color 0.2s ease; }
+  .intro-cta-outline:hover { background: rgba(255,255,255,0.1) !important; border-color: #fff !important; }
+
+  .pkg-cta { transition: background 0.25s ease, color 0.25s ease, outline 0.25s ease; }
+  .pkg-cta:hover { background: transparent !important; color: #fff !important; outline: 1px solid currentColor; }
+
+  .final-cta { transition: background 0.25s ease, color 0.25s ease, outline 0.25s ease; }
+  .final-cta:hover { background: transparent !important; color: #fff !important; outline: 1px solid var(--js-signal-green); }
+  .final-cta-outline { transition: background 0.25s ease, color 0.25s ease; }
+  .final-cta-outline:hover { background: #fff !important; color: #000 !important; }
+</style>

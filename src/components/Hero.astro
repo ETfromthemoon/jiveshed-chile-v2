@@ -1,0 +1,156 @@
+---
+// HERO v2 — contenido literal de "JIVESHED CONTENIDO v2.md"
+// Doc lines 73-89: hero headline, body, tagline, buttons, supporting line (traducida al inglés)
+---
+
+<section
+  id="inicio"
+  class="hero-section"
+  style="height:100dvh;background:transparent;display:flex;flex-direction:column;justify-content:space-between;position:relative"
+>
+  <!-- Overlay sutil sobre el global-bg persistente -->
+  <div class="hero-overlay" aria-hidden="true"></div>
+  <div class="container-wide relative z-10" style="padding-top:clamp(2.5rem, 5vw, 4rem);padding-bottom:0;flex:1;display:flex;flex-direction:column;justify-content:center;position:relative;z-index:2">
+
+    <!-- Eyebrow — brand doc: AI integrated Growth Experience Agency -->
+    <div class="flex items-center justify-between mb-6 reveal">
+      <span class="label-mono flex items-center gap-2" style="color:rgba(255,255,255,0.6)">
+        <span style="display:inline-block;width:5px;height:5px;border-radius:50%;background:var(--js-signal-green)"></span>
+        AI integrated Growth Experience Agency · Chile
+      </span>
+      <span class="hidden md:block label-mono" style="color:rgba(255,255,255,0.5)">JiveShed</span>
+    </div>
+
+    <!-- HEADLINE primario — doc línea 75 -->
+    <div class="text-reveal" style="line-height:1;overflow:hidden">
+      <h1
+        class="text-reveal-inner font-bold leading-none"
+        style="font-size:clamp(1.5rem, 5.2vw, 5.5rem);color:#fff;letter-spacing:-0.02em;text-shadow:0 2px 24px rgba(0,0,0,0.7)"
+      >
+        AI-integrated <em style="font-family:var(--font-serif);font-weight:400;font-style:italic">growth experiences</em>
+      </h1>
+    </div>
+    <div class="text-reveal revealed-delay-1" style="line-height:1;overflow:hidden">
+      <span
+        class="text-reveal-inner block font-bold leading-none"
+        style="font-size:clamp(1.5rem, 5.2vw, 5.5rem);color:#fff;letter-spacing:-0.02em;text-shadow:0 2px 24px rgba(0,0,0,0.7)"
+      >
+        for Chilean businesses.
+      </span>
+    </div>
+
+    <!-- Tagline secundario — doc línea 79 -->
+    <div class="text-reveal revealed-delay-2" style="line-height:1;overflow:hidden;margin-top:clamp(0.5rem,1.5vw,1rem)">
+      <span
+        class="text-reveal-inner block italic leading-none"
+        style="font-family:var(--font-serif);font-size:clamp(1rem, 3vw, 2.5rem);color:rgba(255,255,255,0.85);letter-spacing:-0.01em;text-shadow:0 2px 24px rgba(0,0,0,0.7)"
+      >
+        From attention to action.
+      </span>
+    </div>
+
+    <!-- Animated rule -->
+    <div
+      class="line-draw reveal"
+      style="height:1px;background:rgba(255,255,255,0.28);margin-top:clamp(1.5rem, 3vw, 3rem);margin-bottom:clamp(1.5rem, 3vw, 3rem)"
+    ></div>
+
+    <!-- Body + CTAs — doc líneas 77 + 83-89 (supporting line traducida) -->
+    <div class="reveal reveal-delay-2 grid grid-cols-1 md:grid-cols-[1fr_auto] gap-6 items-end" style="padding-bottom:clamp(2rem, 4vw, 4rem)">
+      <p class="text-base leading-relaxed max-w-2xl" style="color:rgba(255,255,255,0.85)">
+        We help SMEs, restaurants, clinics, real estate agents, ecommerce stores, tourism brands, and B2B companies turn social media, WhatsApp, Google, ads, and CRM into one connected growth system.
+        <span style="display:block;margin-top:0.75rem;color:rgba(255,255,255,0.7);font-size:0.85rem">
+          More visibility. More WhatsApp messages. More bookings. More sales. More returning customers.
+        </span>
+      </p>
+      <div class="flex flex-wrap gap-3 flex-shrink-0">
+        <button
+          type="button"
+          data-open-panel="cta"
+          class="hero-cta inline-flex items-center gap-3 px-8 py-4"
+          style="background:var(--js-coral);color:#fff;font-family:var(--font-mono);font-size:0.65rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;cursor:pointer;border:none"
+        >
+          Request a growth audit
+          <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+          </svg>
+        </button>
+        <a
+          href="/packages/"
+          class="hero-cta-outline inline-flex items-center gap-3 px-8 py-4"
+          style="background:transparent;color:#fff;font-family:var(--font-mono);font-size:0.65rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;border:1px solid rgba(255,255,255,0.7)"
+        >
+          See service packages
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Marquee bar — doc línea 67: process flow -->
+  <div
+    style="border-top:1px solid rgba(255,255,255,0.07);border-bottom:1px solid rgba(255,255,255,0.07);padding:0.8rem 0;overflow:hidden;flex-shrink:0;position:relative;z-index:2"
+    aria-hidden="true"
+  >
+    <div class="marquee-track">
+      {[
+        'STRATEGY','CONTENT','TRAFFIC','WHATSAPP','CONVERSION','RETENTION','ANALYTICS',
+        'STRATEGY','CONTENT','TRAFFIC','WHATSAPP','CONVERSION','RETENTION','ANALYTICS',
+      ].map((item) => (
+        <span class="flex-shrink-0 px-8 label-mono" style="white-space:nowrap">
+          {item}&nbsp;&nbsp;·
+        </span>
+      ))}
+    </div>
+  </div>
+
+</section>
+
+<style>
+  .hero-section { overflow: hidden; }
+
+  @media (max-width: 1023px) {
+    .hero-section {
+      overflow-y: auto;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
+      height: calc(100dvh - var(--btab-h));
+      padding-bottom: 1rem;
+    }
+    .hero-section::-webkit-scrollbar { width: 3px; }
+    .hero-section::-webkit-scrollbar-track { background: transparent; }
+    .hero-section::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.18); border-radius: 2px; }
+  }
+
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 30% 20%, rgba(14,32,110,0.25), transparent 60%),
+      radial-gradient(ellipse at 80% 80%, rgba(78,26,10,0.18), transparent 65%),
+      var(--js-overlay-charcoal);
+    z-index: 1;
+    pointer-events: none;
+  }
+  .hero-cta {
+    background: var(--js-coral) !important;
+    color: #fff !important;
+    transition: background 0.25s ease, color 0.25s ease, outline 0.25s ease;
+  }
+  .hero-cta:hover {
+    background: transparent !important;
+    color: #fff !important;
+    outline: 1px solid var(--js-coral);
+  }
+  .hero-cta svg { stroke: currentColor; }
+  .hero-cta-outline {
+    background: transparent !important;
+    color: #fff !important;
+    transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+  }
+  .hero-cta-outline:hover {
+    background: #fff !important;
+    color: #000 !important;
+    border-color: #fff !important;
+  }
+</style>

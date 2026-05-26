@@ -1,0 +1,301 @@
+---
+import '../styles/global.css';
+import { EtherealShadow } from '../components/ui/etheral-shadow';
+
+interface Tab { id: string; label: string; }
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  pageTabs?: Tab[];
+}
+
+const {
+  title = 'JiveShed — From attention to action. AI integrated growth systems for Chilean businesses.',
+  description = 'JiveShed builds AI-integrated growth systems that connect social media, WhatsApp, Google, ads, CRM, and retention for Chilean businesses.',
+  image = '/og-image.jpg',
+  pageTabs,
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href={canonicalURL} />
+
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={image} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={image} />
+
+    <!-- Inter + Crimson Text + Space Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Crimson+Text:ital@0;1&family=Space+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <!-- Global persistent background — único en todo el sitio -->
+    <div id="global-bg" aria-hidden="true">
+      <EtherealShadow
+        client:load
+        color="rgba(180, 180, 200, 0.85)"
+        animation={{ scale: 100, speed: 90 }}
+        noise={{ opacity: 1, scale: 1.2 }}
+        sizing="fill"
+      />
+    </div>
+
+    <!-- Custom cursor -->
+    <div class="cursor-dot" id="cursor-dot" aria-hidden="true"></div>
+    <div class="cursor-ring" id="cursor-ring" aria-hidden="true"></div>
+
+    <slot />
+
+    {pageTabs && pageTabs.length > 0 && (
+      <nav class="section-tabs-bar" id="global-tabs-bar" aria-label="Content sections">
+        <div class="tabs-inner">
+          {pageTabs.map((tab, i) => (
+            <button
+              class="tab-btn"
+              data-tab={tab.id}
+              type="button"
+              aria-label={`View section: ${tab.label}`}
+            >
+              <span class="tab-num">{String(i + 1).padStart(2, '0')}</span>
+              <span class="tab-label">{tab.label}</span>
+            </button>
+          ))}
+        </div>
+      </nav>
+    )}
+
+    <script>
+      // ── Scroll Reveal ─────────────────────────────
+      const revealObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('revealed');
+              revealObserver.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.07, rootMargin: '0px 0px -40px 0px' }
+      );
+
+      document
+        .querySelectorAll('.reveal, .text-reveal, .line-draw')
+        .forEach((el) => revealObserver.observe(el));
+
+      // ── Custom Cursor ─────────────────────────────
+      const dot  = document.getElementById('cursor-dot');
+      const ring = document.getElementById('cursor-ring');
+      let dotX = 0, dotY = 0;
+      let ringX = 0, ringY = 0;
+
+      if (dot && ring) {
+        document.addEventListener('mousemove', (e: MouseEvent) => {
+          dotX = e.clientX;
+          dotY = e.clientY;
+          dot.style.left = dotX + 'px';
+          dot.style.top  = dotY + 'px';
+        });
+
+        (function animateRing() {
+          ringX += (dotX - ringX) * 0.13;
+          ringY += (dotY - ringY) * 0.13;
+          ring.style.left = ringX + 'px';
+          ring.style.top  = ringY + 'px';
+          requestAnimationFrame(animateRing);
+        })();
+
+        document.addEventListener('mouseover', (e: MouseEvent) => {
+          const target = e.target as HTMLElement;
+          if (target.closest('a, button, [data-cursor-hover]')) {
+            dot.classList.add('is-hovering');
+            ring.classList.add('is-hovering');
+          }
+        });
+        document.addEventListener('mouseout', (e: MouseEvent) => {
+          const target = e.target as HTMLElement;
+          if (target.closest('a, button, [data-cursor-hover]')) {
+            dot.classList.remove('is-hovering');
+            ring.classList.remove('is-hovering');
+          }
+        });
+      }
+
+      // ── Counter Animation ─────────────────────────
+      function animateCounter(el: HTMLElement) {
+        const target   = parseFloat(el.dataset.target   ?? '0');
+        const prefix   = el.dataset.prefix   ?? '';
+        const suffix   = el.dataset.suffix   ?? '';
+        const decimals = parseInt(el.dataset.decimals ?? '0');
+        const duration = 1800;
+        const start    = performance.now();
+
+        function update(now: number) {
+          const progress = Math.min((now - start) / duration, 1);
+          const eased    = 1 - Math.pow(1 - progress, 3);
+          el.textContent = prefix + (eased * target).toFixed(decimals) + suffix;
+          if (progress < 1) requestAnimationFrame(update);
+          else el.textContent = prefix + target.toFixed(decimals) + suffix;
+        }
+        requestAnimationFrame(update);
+      }
+
+      const counterObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              animateCounter(entry.target as HTMLElement);
+              counterObserver.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.5 }
+      );
+      document
+        .querySelectorAll('[data-counter]')
+        .forEach((el) => counterObserver.observe(el));
+
+      // ── Interactive Section Tabs ──────────────
+      function initTabs() {
+        const tabBtns = document.querySelectorAll<HTMLButtonElement>('.tab-btn[data-tab]');
+        const panels = document.querySelectorAll<HTMLElement>('.interactive-section');
+
+        function revealPanelContent(panel: HTMLElement) {
+          const reveals = panel.querySelectorAll<HTMLElement>('.reveal, .text-reveal, .line-draw');
+          reveals.forEach((el, i) => {
+            setTimeout(() => el.classList.add('revealed'), 80 + i * 40);
+          });
+          panel.querySelectorAll<HTMLElement>('[data-counter]').forEach((el) => {
+            animateCounter(el);
+          });
+        }
+
+        const tabsInner = document.querySelector<HTMLElement>('.tabs-inner');
+
+        function smoothScrollTabs(target: number) {
+          if (!tabsInner) return;
+          const start     = tabsInner.scrollLeft;
+          const distance  = target - start;
+          if (Math.abs(distance) < 1) return;
+          const duration  = 320;
+          const startTime = performance.now();
+          function step(now: number) {
+            const t = Math.min((now - startTime) / duration, 1);
+            const ease = t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+            tabsInner!.scrollLeft = start + distance * ease;
+            if (t < 1) requestAnimationFrame(step);
+          }
+          requestAnimationFrame(step);
+        }
+
+        function openPanel(id: string) {
+          panels.forEach((p) => p.classList.remove('is-active'));
+          tabBtns.forEach((b) => b.classList.remove('is-active'));
+
+          const panel = document.getElementById('panel-' + id);
+          if (panel) {
+            panel.classList.add('is-active');
+            setTimeout(() => revealPanelContent(panel), 120);
+          }
+          tabBtns.forEach((b) => {
+            if (b.dataset.tab === id) {
+              b.classList.add('is-active');
+              if (tabsInner) {
+                const btnRect   = b.getBoundingClientRect();
+                const innerRect = tabsInner.getBoundingClientRect();
+                const btnCenter = btnRect.left - innerRect.left + btnRect.width / 2;
+                smoothScrollTabs(tabsInner.scrollLeft + btnCenter - tabsInner.clientWidth / 2);
+              }
+            }
+          });
+        }
+
+        tabBtns.forEach((btn) => {
+          btn.addEventListener('click', () => {
+            if (!btn.classList.contains('is-active')) {
+              openPanel(btn.dataset.tab!);
+            }
+          });
+        });
+
+        // ── Scroll / Swipe entre paneles ──────────
+        let scrollLocked = false;
+        function lockScroll() {
+          scrollLocked = true;
+          setTimeout(() => { scrollLocked = false; }, 700);
+        }
+
+        function navigateByDelta(delta: number) {
+          if (scrollLocked) return;
+          const tabList = Array.from(tabBtns);
+          const currentIndex = tabList.findIndex(b => b.classList.contains('is-active'));
+          if (currentIndex === -1) return;
+          const nextIndex = currentIndex + (delta > 0 ? 1 : -1);
+          if (nextIndex >= 0 && nextIndex < tabList.length) {
+            lockScroll();
+            openPanel(tabList[nextIndex].dataset.tab!);
+          }
+        }
+
+        // Mobile/tablet check: solo desktop (>1023px) usa swipe vertical para
+        // rotar entre paneles. En mobile/tablet el swipe queda libre para
+        // hacer scroll interno dentro del panel.
+        const isDesktopViewport = () => window.matchMedia('(min-width: 1024px)').matches;
+
+        // Wheel (desktop trackpad / mouse)
+        document.addEventListener('wheel', (e: WheelEvent) => {
+          if (!isDesktopViewport()) return;
+          navigateByDelta(e.deltaY);
+        }, { passive: true });
+
+        // Touch swipe — solo activo en desktop con touch (tablets grandes / convertibles)
+        let touchStartY = 0;
+        document.addEventListener('touchstart', (e: TouchEvent) => {
+          touchStartY = e.touches[0].clientY;
+        }, { passive: true });
+        document.addEventListener('touchend', (e: TouchEvent) => {
+          if (!isDesktopViewport()) return;
+          const delta = touchStartY - e.changedTouches[0].clientY;
+          if (Math.abs(delta) < 40) return;
+          navigateByDelta(delta);
+        }, { passive: true });
+
+        // Activar primer panel al cargar
+        if (tabBtns.length > 0) {
+          openPanel(tabBtns[0].dataset.tab!);
+        }
+
+        // Permitir que cualquier elemento con data-open-panel abra un panel
+        document.querySelectorAll<HTMLElement>('[data-open-panel]').forEach(btn => {
+          btn.addEventListener('click', () => {
+            openPanel(btn.dataset.openPanel!);
+          });
+        });
+      }
+      initTabs();
+    </script>
+  </body>
+</html>
