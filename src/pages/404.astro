@@ -2,13 +2,104 @@
 import Layout from '../layouts/Layout.astro';
 ---
 
-<Layout title="Page not found | JiveShed Chile">
-  <div class="min-h-screen flex flex-col items-center justify-center bg-[#0a0a0a] text-white px-6">
-    <h1 class="text-8xl font-black text-[#FF3B00] mb-4">404</h1>
-    <p class="text-2xl font-semibold mb-2">Page not found</p>
-    <p class="text-white/60 mb-8">The content you're looking for doesn't exist or was moved.</p>
-    <a href="/" class="bg-[#FF3B00] hover:bg-[#e03300] text-white font-bold px-8 py-3 rounded-full transition-colors">
-      Back to home
-    </a>
-  </div>
+<Layout
+  title="Page not found — JiveShed"
+  description="The page you're looking for doesn't exist or was moved."
+>
+  <main class="nf-wrap">
+    <div class="nf-overlay" aria-hidden="true"></div>
+    <div class="container-wide nf-inner">
+      <p class="label-mono" style="color:var(--js-coral)">Error 404</p>
+      <h1 class="nf-code">404</h1>
+      <p class="nf-title">This page took a wrong turn.</p>
+      <p class="nf-sub">The content you're looking for doesn't exist or was moved.</p>
+
+      <div class="nf-actions">
+        <a href="/" class="nf-cta inline-flex items-center gap-3 px-8 py-4">
+          Back to home
+          <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+          </svg>
+        </a>
+        <a href="/packages/" class="nf-cta-out inline-flex items-center gap-3 px-8 py-4">
+          See packages
+        </a>
+      </div>
+    </div>
+  </main>
 </Layout>
+
+<style>
+  .nf-wrap {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+  .nf-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(ellipse at 30% 20%, rgba(14,32,110,0.25), transparent 60%),
+      var(--js-overlay-charcoal);
+  }
+  .nf-inner {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+  .nf-code {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: clamp(5rem, 22vw, 14rem);
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+    color: #fff;
+    text-shadow: 0 2px 24px rgba(0,0,0,0.6);
+  }
+  .nf-title {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: clamp(1.25rem, 3vw, 2rem);
+    color: rgba(255,255,255,0.9);
+  }
+  .nf-sub {
+    color: rgba(255,255,255,0.6);
+    font-size: 0.95rem;
+    max-width: 32rem;
+    margin-bottom: 1rem;
+  }
+  .nf-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+
+  .nf-cta {
+    background: var(--js-coral);
+    color: #fff;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    transition: background 0.25s ease, color 0.25s ease, outline 0.25s ease;
+  }
+  .nf-cta:hover { background: transparent; outline: 1px solid var(--js-coral); }
+
+  .nf-cta-out {
+    background: transparent;
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.7);
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+  }
+  .nf-cta-out:hover { background: #fff; color: #000; border-color: #fff; }
+</style>

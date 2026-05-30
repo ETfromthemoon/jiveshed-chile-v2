@@ -11,9 +11,9 @@ interface Props {
 }
 
 const {
-  title = 'JiveShed — From attention to action. AI integrated growth systems for Chilean businesses.',
+  title = 'JiveShed — From attention to action. AI-integrated growth systems for Chilean businesses.',
   description = 'JiveShed builds AI-integrated growth systems that connect social media, WhatsApp, Google, ads, CRM, and retention for Chilean businesses.',
-  image = '/og-image.jpg',
+  image = '/og-image.svg',
   pageTabs,
 } = Astro.props;
 
@@ -45,7 +45,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Crimson+Text:ital@0;1&family=Space+Mono:wght@400;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Crimson+Text:ital@0;1&family=Space+Mono:wght@400;700&display=swap"
       rel="stylesheet"
     />
 
@@ -211,15 +211,26 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
           requestAnimationFrame(step);
         }
 
-        function openPanel(id: string) {
-          panels.forEach((p) => p.classList.remove('is-active'));
+        function setHash(id: string) {
+          try { history.replaceState(null, '', '#panel-' + id); } catch { /* noop */ }
+        }
+
+        function openPanel(id: string, updateHash = false) {
+          const panel = document.getElementById('panel-' + id);
+          if (!panel) return;
+
+          // Deactivate + make every panel inert (removes hidden panels from
+          // keyboard tab-order and the accessibility tree).
+          panels.forEach((p) => {
+            p.classList.remove('is-active');
+            p.setAttribute('inert', '');
+          });
           tabBtns.forEach((b) => b.classList.remove('is-active'));
 
-          const panel = document.getElementById('panel-' + id);
-          if (panel) {
-            panel.classList.add('is-active');
-            setTimeout(() => revealPanelContent(panel), 120);
-          }
+          panel.classList.add('is-active');
+          panel.removeAttribute('inert');
+          setTimeout(() => revealPanelContent(panel), 120);
+
           tabBtns.forEach((b) => {
             if (b.dataset.tab === id) {
               b.classList.add('is-active');
@@ -231,14 +242,31 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
               }
             }
           });
+
+          if (updateHash) setHash(id);
+        }
+
+        // Resolve a starting panel from the URL hash so cross-page deep links
+        // like /system/#panel-who open the right panel (not just the first).
+        function getInitialTabId(): string | null {
+          const raw = window.location.hash.replace(/^#/, '');
+          if (!raw) return null;
+          const id = raw.startsWith('panel-') ? raw.slice(6) : raw;
+          return Array.from(tabBtns).some((b) => b.dataset.tab === id) ? id : null;
         }
 
         tabBtns.forEach((btn) => {
           btn.addEventListener('click', () => {
             if (!btn.classList.contains('is-active')) {
-              openPanel(btn.dataset.tab!);
+              openPanel(btn.dataset.tab!, true);
             }
           });
+        });
+
+        // Keep panels in sync if the hash changes (browser back/forward, etc.)
+        window.addEventListener('hashchange', () => {
+          const id = getInitialTabId();
+          if (id) openPanel(id);
         });
 
         // ── Scroll / Swipe entre paneles ──────────
@@ -256,7 +284,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
           const nextIndex = currentIndex + (delta > 0 ? 1 : -1);
           if (nextIndex >= 0 && nextIndex < tabList.length) {
             lockScroll();
-            openPanel(tabList[nextIndex].dataset.tab!);
+            openPanel(tabList[nextIndex].dataset.tab!, true);
           }
         }
 
@@ -283,15 +311,20 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
           navigateByDelta(delta);
         }, { passive: true });
 
-        // Activar primer panel al cargar
-        if (tabBtns.length > 0) {
+        // Activar panel inicial: el del hash (deep link) o el primero.
+        const initialId = getInitialTabId();
+        if (initialId) {
+          openPanel(initialId);
+        } else if (tabBtns.length > 0) {
           openPanel(tabBtns[0].dataset.tab!);
         }
 
-        // Permitir que cualquier elemento con data-open-panel abra un panel
+        // Permitir que cualquier elemento con data-open-panel abra un panel.
+        // preventDefault evita el salto de ancla nativo de los <a href="#panel-…">.
         document.querySelectorAll<HTMLElement>('[data-open-panel]').forEach(btn => {
-          btn.addEventListener('click', () => {
-            openPanel(btn.dataset.openPanel!);
+          btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            openPanel(btn.dataset.openPanel!, true);
           });
         });
       }

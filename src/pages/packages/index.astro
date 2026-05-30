@@ -61,7 +61,7 @@ const packages = [
     name: 'Silver',
     price: '1,500,000',
     positioning: 'Growth system',
-    forWho: 'Small Media Enterprises ready to grow systematically.',
+    forWho: 'Small and medium enterprises ready to grow systematically.',
     bestFor: 'Serious SMEs',
     promise: 'Turn social media into measurable bookings, quotes, and sales.',
     includes: [
@@ -306,7 +306,7 @@ const ladderTabs = [
                 "{pkg.message}"
               </blockquote>
               <a
-                href="mailto:hello@jiveshed.com?subject=JiveShed%20-%20Interested%20in%20the%20{pkg.name}%20package"
+                href={`mailto:hello@jiveshed.com?subject=${encodeURIComponent(`JiveShed — Interested in the ${pkg.name} package`)}`}
                 class="pkg-cta inline-flex items-center gap-2 px-5 py-3 mt-2"
                 style={`background:${pkg.accent};color:#000;font-family:var(--font-mono);font-size:0.6rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;align-self:flex-start`}
               >

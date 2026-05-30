@@ -34,16 +34,6 @@
     Referrer-Policy = "strict-origin-when-cross-origin"
 
 [[redirects]]
-  from = "/audit"
-  to = "/#audit"
-  status = 301
-
-[[redirects]]
-  from = "/servicios"
-  to = "/#servicios"
-  status = 301
-
-[[redirects]]
   from = "/*"
   to = "/404.html"
   status = 404

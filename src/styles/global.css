@@ -92,6 +92,14 @@
       transition-duration: 0.01ms !important;
     }
   }
+
+  /* Keyboard focus: visible ring for tab navigation (the custom cursor
+     hides the pointer, so a clear focus state is essential for a11y). */
+  :where(a, button, input, textarea, select, [tabindex]):focus-visible {
+    outline: 2px solid var(--js-coral);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
 }
 
 @layer utilities {
@@ -236,6 +244,19 @@
   @media (pointer: coarse) {
     .cursor-dot, .cursor-ring { display: none; }
   }
+
+  /* ── Screen-reader-only (visually hidden, still announced) ─── */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
 }
 
 /* ── Keyframes ────────────────────────────── */
@@ -292,21 +313,6 @@
 .interactive-section.is-active {
   opacity: 1;
   pointer-events: all;
-}
-
-.section-bg-photo {
-  position: fixed;
-  inset: 0;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  z-index: 0;
-}
-.section-bg-photo::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: var(--section-overlay);
 }
 
 .section-panel-content {
@@ -442,29 +448,6 @@
 .photo-text-shadow h2,
 .photo-text-shadow h3 {
   text-shadow: 0 2px 8px rgba(0,0,0,0.4);
-}
-
-/* PageHero with photo background */
-.page-hero-photo {
-  position: relative;
-  overflow: hidden;
-}
-.page-hero-photo-bg {
-  position: absolute;
-  inset: 0;
-  background-size: cover;
-  background-position: center;
-  z-index: 0;
-}
-.page-hero-photo-bg::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: var(--hero-overlay, rgba(0,0,0,0.7));
-}
-.page-hero-photo > .container-wide {
-  position: relative;
-  z-index: 1;
 }
 
 /* ── Touch-friendly CTAs (tablet & mobile) ─────────── */

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useId, useEffect } from 'react';
+import React, { useRef, useId, useEffect, useState } from 'react';
 import type { CSSProperties } from 'react';
 import { animate, useMotionValue } from 'framer-motion';
 import type { AnimationPlaybackControls } from 'framer-motion';
@@ -44,7 +44,20 @@ export function EtherealShadow({
     className,
 }: EtherealShadowProps) {
     const id = useInstanceId();
-    const animationEnabled = !!animation && animation.scale > 0;
+
+    // Respect the user's reduced-motion preference: keep the static
+    // ethereal mask visible but stop the looping hue/displacement animation.
+    const [reduceMotion, setReduceMotion] = useState(false);
+    useEffect(() => {
+        if (typeof window === 'undefined' || !window.matchMedia) return;
+        const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+        setReduceMotion(mq.matches);
+        const handler = (e: MediaQueryListEvent) => setReduceMotion(e.matches);
+        mq.addEventListener('change', handler);
+        return () => mq.removeEventListener('change', handler);
+    }, []);
+
+    const animationEnabled = !!animation && animation.scale > 0 && !reduceMotion;
     const feColorMatrixRef = useRef<SVGFEColorMatrixElement>(null);
     const hueRotateMotionValue = useMotionValue(180);
     const hueRotateAnimation = useRef<AnimationPlaybackControls | null>(null);
@@ -135,8 +148,8 @@ export function EtherealShadow({
                 <div
                     style={{
                         backgroundColor: color,
-                        maskImage: `url('https://framerusercontent.com/images/ceBGguIpUU8luwByxuQz79t7To.png')`,
-                        WebkitMaskImage: `url('https://framerusercontent.com/images/ceBGguIpUU8luwByxuQz79t7To.png')`,
+                        maskImage: `url('/textures/ethereal-mask.png')`,
+                        WebkitMaskImage: `url('/textures/ethereal-mask.png')`,
                         maskSize: sizing === 'stretch' ? '100% 100%' : 'cover',
                         WebkitMaskSize: sizing === 'stretch' ? '100% 100%' : 'cover',
                         maskRepeat: 'no-repeat',
@@ -154,7 +167,7 @@ export function EtherealShadow({
                     style={{
                         position: 'absolute',
                         inset: 0,
-                        backgroundImage: `url("https://framerusercontent.com/images/g0QcWrxr87K0ufOxIUFBakwYA8.png")`,
+                        backgroundImage: `url("/textures/ethereal-noise.png")`,
                         backgroundSize: noise.scale * 200,
                         backgroundRepeat: 'repeat',
                         opacity: noise.opacity / 2,
