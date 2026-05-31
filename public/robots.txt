@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://jiveshedchile.com/sitemap-index.xml
+Sitemap: https://jiveshed.com/sitemap-index.xml

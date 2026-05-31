@@ -5,7 +5,7 @@ import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  site: 'https://jiveshedchile.com',
+  site: 'https://jiveshed.com',
   integrations: [
     react(),
     sitemap(),
