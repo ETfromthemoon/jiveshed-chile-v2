@@ -26,7 +26,7 @@ const links = [
 <nav id="left-rail" aria-label="Main navigation">
 
   <a href="/" class="rail-logo" aria-label="JiveShed — home">
-    <span class="rail-logo-mark">JS</span>
+    <span class="rail-logo-mark">JiveShed</span>
     <span class="rail-tooltip">JiveShed</span>
   </a>
 
@@ -124,27 +124,37 @@ const links = [
 .rail-logo {
   position: relative;
   width: 100%;
-  height: 52px;
+  height: auto;
   display: flex;
   align-items: center;
   justify-content: center;
   text-decoration: none;
-  margin-bottom: 0.5rem;
-  padding-bottom: 0.5rem;
+  padding: 1.1rem 0 1rem;
   border-bottom: 1px solid rgba(255,255,255,0.07);
   flex-shrink: 0;
 }
 .rail-logo-mark {
   font-family: var(--font-display);
   font-weight: 900;
-  font-size: 0.85rem;
-  letter-spacing: -0.04em;
-  color: #fff;
+  font-size: 0.82rem;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
   line-height: 1;
+  writing-mode: vertical-lr;
+  white-space: nowrap;
+  color: transparent;
+  background: repeating-linear-gradient(
+    to right,
+    #ffffff 0px,
+    #ffffff 2.5px,
+    transparent 2.5px,
+    transparent 5px
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
   transition: opacity 0.2s ease;
 }
-.rail-logo:hover .rail-logo-mark { opacity: 0.7; }
+.rail-logo:hover .rail-logo-mark { opacity: 0.65; }
 
 @media (max-width: 1023px) {
   #left-rail { display: none; }
