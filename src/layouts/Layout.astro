@@ -68,6 +68,9 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <div class="cursor-dot" id="cursor-dot" aria-hidden="true"></div>
     <div class="cursor-ring" id="cursor-ring" aria-hidden="true"></div>
 
+    <!-- Floating Contacto CTA — visible on all pages -->
+    <a href="/contacto/" class="global-contact-cta" aria-label="Contactar JiveShed">Contacto</a>
+
     <slot />
 
     {pageTabs && pageTabs.length > 0 && (

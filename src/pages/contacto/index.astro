@@ -1,0 +1,181 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+---
+
+<Layout
+  title="Contacto — JiveShed"
+  description="Book a free growth audit or ask a question. We'll get back to you within 24 hours."
+>
+  <Nav />
+  <main class="ct-wrap">
+    <div class="ct-overlay" aria-hidden="true"></div>
+    <div class="container-wide ct-inner">
+
+      <p class="label-mono" style="color:var(--js-coral)">Contacto</p>
+
+      <h1 class="ct-heading">
+        Let's <em>talk.</em>
+      </h1>
+
+      <p class="ct-sub">
+        Book a free growth audit or ask us anything.<br>
+        We reply within 24 hours.
+      </p>
+
+      <div class="ct-channels">
+        <div class="ct-channel">
+          <span class="label-mono ct-channel-label">Email</span>
+          <a href="mailto:hello@jiveshed.com" class="ct-channel-link">hello@jiveshed.com</a>
+        </div>
+        <div class="ct-channel">
+          <span class="label-mono ct-channel-label">WhatsApp</span>
+          <a href="tel:+56936106328" class="ct-channel-link">+56 9 3610 6328</a>
+        </div>
+        <div class="ct-channel">
+          <span class="label-mono ct-channel-label">Location</span>
+          <span class="ct-channel-value">Chile</span>
+        </div>
+      </div>
+
+      <div class="ct-actions">
+        <a
+          href="mailto:hello@jiveshed.com?subject=JiveShed%20Growth%20Audit"
+          class="ct-cta inline-flex items-center gap-3 px-8 py-4"
+        >
+          Request my growth audit
+          <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+          </svg>
+        </a>
+        <a href="/packages/" class="ct-cta-out inline-flex items-center gap-3 px-8 py-4">
+          See packages first
+        </a>
+      </div>
+
+    </div>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .ct-wrap {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  .ct-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(ellipse at 20% 40%, rgba(14, 32, 110, 0.28), transparent 60%),
+      radial-gradient(ellipse at 85% 15%, rgba(78, 26, 10, 0.22), transparent 55%),
+      var(--js-overlay-charcoal);
+  }
+
+  .ct-inner {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.65rem;
+  }
+
+  .ct-heading {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: clamp(3.5rem, 14vw, 10rem);
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+    color: #fff;
+    text-shadow: 0 2px 24px rgba(0,0,0,0.6);
+    margin: 0.25rem 0 0;
+  }
+  .ct-heading em {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-style: italic;
+  }
+
+  .ct-sub {
+    color: rgba(255,255,255,0.72);
+    font-size: clamp(0.9rem, 1.4vw, 1.05rem);
+    line-height: 1.65;
+    max-width: 38rem;
+    margin: 0.35rem 0 0.85rem;
+  }
+
+  .ct-channels {
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid rgba(255,255,255,0.15);
+    margin-bottom: 1.5rem;
+    width: 100%;
+    max-width: 32rem;
+  }
+  .ct-channel {
+    display: flex;
+    align-items: baseline;
+    gap: 1.5rem;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+  .ct-channel-label {
+    color: rgba(255,255,255,0.4);
+    min-width: 10rem;
+    flex-shrink: 0;
+  }
+  .ct-channel-link {
+    color: rgba(255,255,255,0.9);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  .ct-channel-link:hover { color: var(--js-coral); }
+  .ct-channel-value {
+    color: rgba(255,255,255,0.9);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+  }
+
+  .ct-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+
+  .ct-cta {
+    background: var(--js-coral);
+    color: #fff;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background 0.25s ease, color 0.25s ease, outline 0.25s ease;
+  }
+  .ct-cta:hover { background: transparent; outline: 1px solid var(--js-coral); }
+  .ct-cta svg { stroke: currentColor; }
+
+  .ct-cta-out {
+    background: transparent;
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.7);
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+  }
+  .ct-cta-out:hover { background: #fff; color: #000; border-color: #fff; }
+</style>
