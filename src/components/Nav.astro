@@ -1,23 +1,48 @@
 ---
+import type { Lang } from '../i18n/translations';
+import { translations } from '../i18n/translations';
+
+interface Props { lang?: Lang; }
+const { lang = 'en' } = Astro.props;
+const t = translations[lang].nav;
+
 const pathname = Astro.url.pathname;
+
+// Strip lang prefix to get base path for language switcher
+const knownLangs: Lang[] = ['es', 'pt'];
+let basePath = pathname;
+for (const l of knownLangs) {
+  if (basePath === `/${l}` || basePath === `/${l}/`) { basePath = '/'; break; }
+  if (basePath.startsWith(`/${l}/`)) { basePath = basePath.slice(l.length + 1); break; }
+}
+const langUrls: Record<Lang, string> = {
+  en: basePath,
+  es: basePath === '/' ? '/es/' : `/es${basePath}`,
+  pt: basePath === '/' ? '/pt/' : `/pt${basePath}`,
+};
+
+// Prefix for links
+const p = lang === 'en' ? '' : `/${lang}`;
 
 const links = [
   {
-    label: 'System',
-    href: '/system/',
+    label: t.system,
+    href: `${p}/system/`,
     icon: `<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 2v3M12 19v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M2 12h3M19 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12"/></svg>`,
   },
   {
-    label: 'Packages',
-    href: '/packages/',
+    label: t.packages,
+    href: `${p}/packages/`,
     icon: `<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96" stroke-linecap="round" stroke-linejoin="round"/><line x1="12" y1="22.08" x2="12" y2="12" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
   },
   {
-    label: 'Contacto',
-    href: '/contacto/',
+    label: t.contacto,
+    href: `${p}/contacto/`,
     icon: `<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>`,
   },
 ];
+
+const homeHref = lang === 'en' ? '/' : `/${lang}/`;
 ---
 
 <!-- ═══════════════════════════════════════════════════
@@ -25,22 +50,23 @@ const links = [
 ════════════════════════════════════════════════════ -->
 <nav id="left-rail" aria-label="Main navigation">
 
-  <a href="/" class="rail-logo" aria-label="JiveShed — home">
-    <span class="rail-logo-mark">JiveShed</span>
-    <span class="rail-tooltip">JiveShed</span>
+  <a href={homeHref} class="rail-logo" aria-label="JiveShed — home">
+    <span class="rail-logo-mark" aria-hidden="true">
+      {[...'jiveshed'].map(l => <span>{l}</span>)}
+    </span>
   </a>
 
   <div class="rail-links-group">
     <a
-      href="/"
-      class={`rail-link ${pathname === '/' ? 'is-active' : ''}`}
-      aria-label="Home"
-      aria-current={pathname === '/' ? 'page' : undefined}
+      href={homeHref}
+      class={`rail-link ${pathname === homeHref || pathname === '/' && lang === 'en' ? 'is-active' : ''}`}
+      aria-label={t.home}
+      aria-current={pathname === homeHref ? 'page' : undefined}
     >
       <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true">
         <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
       </svg>
-      <span class="rail-tooltip">Home</span>
+      <span class="rail-tooltip">{t.home}</span>
     </a>
     {links.map(link => (
       <a
@@ -57,13 +83,25 @@ const links = [
     <a
       href="mailto:hello@jiveshed.com?subject=JiveShed%20Growth%20Audit"
       class="rail-link rail-link-cta"
-      aria-label="Growth Audit"
+      aria-label={t.growthAudit}
     >
       <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true">
         <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
       </svg>
-      <span class="rail-tooltip">Growth Audit</span>
+      <span class="rail-tooltip">{t.growthAudit}</span>
     </a>
+  </div>
+
+  <!-- Language switcher -->
+  <div class="rail-lang-switcher" aria-label="Language">
+    {(['en', 'es', 'pt'] as const).map(l => (
+      <a
+        href={langUrls[l]}
+        class={`rail-lang-btn ${lang === l ? 'is-active' : ''}`}
+        aria-label={l.toUpperCase()}
+        aria-current={lang === l ? 'true' : undefined}
+      >{l.toUpperCase()}</a>
+    ))}
   </div>
 </nav>
 
@@ -72,11 +110,11 @@ const links = [
      MOBILE BOTTOM TAB BAR
 ════════════════════════════════════════════════════ -->
 <nav id="bottom-tabs" aria-label="Mobile navigation">
-  <a href="/" class={`btab ${pathname === '/' ? 'is-active' : ''}`} aria-label="Home">
+  <a href={homeHref} class={`btab ${pathname === homeHref ? 'is-active' : ''}`} aria-label={t.home}>
     <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true">
       <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
     </svg>
-    <span>Home</span>
+    <span>{t.home}</span>
   </a>
 
   {links.map(link => (
@@ -94,12 +132,12 @@ const links = [
   <a
     href="mailto:hello@jiveshed.com?subject=JiveShed%20Growth%20Audit"
     class="btab btab-audit"
-    aria-label="Growth Audit"
+    aria-label={t.growthAudit}
   >
     <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true">
       <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
     </svg>
-    <span>Audit</span>
+    <span>{lang === 'en' ? 'Audit' : lang === 'es' ? 'Auditoría' : 'Auditoria'}</span>
   </a>
 </nav>
 
@@ -134,25 +172,27 @@ const links = [
   flex-shrink: 0;
 }
 .rail-logo-mark {
-  font-family: var(--font-display);
-  font-weight: 900;
-  font-size: 0.82rem;
-  letter-spacing: 0.22em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   line-height: 1;
-  writing-mode: vertical-lr;
-  white-space: nowrap;
-  color: transparent;
-  background: repeating-linear-gradient(
-    to right,
-    #ffffff 0px,
-    #ffffff 2.5px,
-    transparent 2.5px,
-    transparent 5px
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
+  color: rgba(255, 255, 255, 0.9);
   transition: opacity 0.2s ease;
+}
+.rail-logo-mark > span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 16px;
+  border: 1px solid rgba(255,255,255,0.12);
+  line-height: 1;
 }
 .rail-logo:hover .rail-logo-mark { opacity: 0.65; }
 
@@ -200,6 +240,34 @@ const links = [
 }
 .rail-link-cta { color: var(--js-coral); margin-top: auto; }
 .rail-link-cta:hover { color: #fff; background: rgba(255,107,61,0.15); }
+
+.rail-lang-switcher {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 0.6rem 0 0.75rem;
+  border-top: 1px solid rgba(255,255,255,0.07);
+  width: 100%;
+  margin-top: auto;
+}
+.rail-lang-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 22px;
+  font-family: var(--font-mono);
+  font-size: 0.5rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-decoration: none;
+  color: rgba(255,255,255,0.38);
+  border-radius: 2px;
+  transition: color 0.15s ease, background 0.15s ease;
+}
+.rail-lang-btn:hover { color: rgba(255,255,255,0.8); background: rgba(255,255,255,0.08); }
+.rail-lang-btn.is-active { color: #fff; background: rgba(255,255,255,0.12); }
 
 .rail-tooltip {
   position: absolute;

@@ -1,0 +1,205 @@
+---
+import type { Lang } from '../../../i18n/translations';
+import { translations } from '../../../i18n/translations';
+import Layout from '../../../layouts/Layout.astro';
+import Nav from '../../../components/Nav.astro';
+import InteractiveSection from '../../../components/InteractiveSection.astro';
+import Footer from '../../../components/Footer.astro';
+
+export function getStaticPaths() {
+  return [{ params: { lang: 'es' } }, { params: { lang: 'pt' } }];
+}
+
+const { lang } = Astro.params as { lang: Lang };
+const t = translations[lang];
+const pk = t.packages;
+
+const overlays = ['var(--js-overlay-charcoal)', 'var(--js-overlay-green)', 'var(--js-overlay-blue)', 'var(--js-overlay-coral)', 'var(--js-overlay-charcoal)'];
+const accents = ['rgba(255,255,255,0.85)', 'var(--js-signal-green)', 'var(--js-electric-blue)', 'var(--js-coral)', '#fff'];
+---
+
+<Layout title={pk.metaTitle} description={pk.metaDesc} lang={lang} pageTabs={pk.tabs}>
+  <Nav lang={lang} />
+  <main>
+
+    <!-- ═══ PANEL 01: Intro ═══ -->
+    <InteractiveSection id="intro" label={pk.introLabel} imageUrl="" overlayColor="var(--js-overlay-charcoal)">
+      <div class="container-wide flex flex-col items-start justify-center" style="gap:clamp(1.5rem,3vw,2.5rem);min-height:60vh">
+        <div class="label-mono reveal" style="color:rgba(255,255,255,0.5)">{pk.introLabel}</div>
+        <h1 class="reveal reveal-delay-1 font-bold leading-tight tracking-tight" style="font-size:clamp(2.25rem,7vw,6rem);color:#fff;letter-spacing:-0.02em;max-width:62rem">
+          {pk.introHeading} <em style="font-family:var(--font-serif);font-weight:400;font-style:italic">{pk.introHeadingItalic}</em>
+        </h1>
+        <p class="reveal reveal-delay-2" style="color:rgba(255,255,255,0.8);font-size:clamp(0.95rem,1.4vw,1.2rem);line-height:1.6;max-width:46rem">
+          {pk.introBody}
+        </p>
+        <div class="reveal reveal-delay-3 grid grid-cols-2 sm:grid-cols-5 gap-px w-full" style="background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.12);margin-top:1rem">
+          {pk.packages.map((pkg, i) => (
+            <a href={`#panel-${pkg.id}`} data-open-panel={pkg.id} class="intro-tier flex flex-col gap-1 p-4 text-center" style="background:rgba(0,0,0,0.4);text-decoration:none">
+              {'popular' in pkg && pkg.popular && <span class="label-mono" style="color:var(--js-signal-green);margin-bottom:0.15rem">{pk.popular}</span>}
+              <h3 class="font-bold leading-tight tracking-tight" style={`font-size:clamp(0.95rem,1.5vw,1.2rem);color:${accents[i]};letter-spacing:-0.01em`}>{pkg.name}</h3>
+              <span class="label-mono" style="color:rgba(255,255,255,0.5);font-size:0.5rem">${pkg.price}</span>
+            </a>
+          ))}
+        </div>
+        <div class="reveal flex flex-wrap gap-3" style="margin-top:0.5rem">
+          <button type="button" data-open-panel="ladder" class="intro-cta-primary inline-flex items-center gap-3 px-6 py-3" style="background:var(--js-coral);color:#fff;font-family:var(--font-mono);font-size:0.6rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;border:none;cursor:pointer">
+            {pk.compareBtn}
+            <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+            </svg>
+          </button>
+          <a href="mailto:hello@jiveshed.com?subject=JiveShed%20Growth%20Audit" class="intro-cta-outline inline-flex items-center gap-3 px-6 py-3" style="background:transparent;color:#fff;font-family:var(--font-mono);font-size:0.6rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;border:1px solid rgba(255,255,255,0.55)">
+            {pk.notSureBtn}
+          </a>
+        </div>
+      </div>
+    </InteractiveSection>
+
+    <!-- ═══ PANEL 02: Ladder ═══ -->
+    <InteractiveSection id="ladder" label={pk.ladderLabel} imageUrl="" overlayColor="var(--js-overlay-blue)">
+      <div class="container-wide flex flex-col" style="gap:clamp(1.25rem,2.5vw,2rem)">
+        <div class="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-6 items-end">
+          <div>
+            <div class="label-mono reveal mb-3" style="color:rgba(255,255,255,0.5)">{pk.ladderLabel}</div>
+            <h2 class="reveal reveal-delay-1 font-bold leading-tight tracking-tight" style="font-size:clamp(1.75rem,4vw,3.25rem);color:#fff;letter-spacing:-0.02em;max-width:48rem">
+              {pk.ladderHeading} <em style="font-family:var(--font-serif);font-weight:400;font-style:italic">{pk.ladderHeadingItalic}</em> {pk.ladderHeadingSuffix}
+            </h2>
+          </div>
+          <p class="reveal reveal-delay-2 text-sm self-end leading-relaxed max-w-xs" style="color:rgba(255,255,255,0.65);font-size:0.85rem">
+            {pk.ladderEachRow}
+          </p>
+        </div>
+        <div class="reveal reveal-delay-2" style="border-top:1px solid rgba(255,255,255,0.18)">
+          <div class="hidden lg:grid items-center py-2" style="grid-template-columns:1fr 1.2fr 1.6fr 2fr;gap:1rem;border-bottom:1px solid rgba(255,255,255,0.1)">
+            <span class="label-mono" style="color:rgba(255,255,255,0.4)">{pk.colPackage}</span>
+            <span class="label-mono" style="color:rgba(255,255,255,0.4)">{pk.colPrice}</span>
+            <span class="label-mono" style="color:rgba(255,255,255,0.4)">{pk.colBestFor}</span>
+            <span class="label-mono" style="color:rgba(255,255,255,0.4)">{pk.colPromise}</span>
+          </div>
+          {pk.packages.map((pkg, i) => (
+            <a href={`#panel-${pkg.id}`} data-open-panel={pkg.id} class="ladder-row grid items-center py-4 border-b" style="border-color:rgba(255,255,255,0.1);grid-template-columns:1fr 1.2fr 1.6fr 2fr;gap:1rem;cursor:pointer;text-decoration:none">
+              <div class="flex flex-col gap-1">
+                {'popular' in pkg && pkg.popular && <span class="label-mono" style="color:var(--js-signal-green)">{pk.popular}</span>}
+                <h3 class="font-bold leading-tight tracking-tight" style={`font-size:clamp(1rem,1.8vw,1.5rem);color:${accents[i]};letter-spacing:-0.01em`}>{pkg.name}</h3>
+                <span class="label-mono" style="color:rgba(255,255,255,0.4)">{pkg.positioning}</span>
+              </div>
+              <div class="flex flex-col">
+                <div class="flex items-baseline gap-0.5 flex-wrap">
+                  <span style="font-family:var(--font-mono);font-size:0.55rem;color:rgba(255,255,255,0.5)">$</span>
+                  <span class="font-bold leading-none tracking-tight" style="font-size:clamp(1rem,2vw,1.7rem);color:#fff;letter-spacing:-0.02em">{pkg.price}</span>
+                </div>
+                <span class="label-mono" style="color:rgba(255,255,255,0.4);margin-top:0.2rem">{pk.perMonth}</span>
+              </div>
+              <p class="hidden lg:block" style="color:rgba(255,255,255,0.7);font-size:0.85rem;line-height:1.55">{pkg.bestFor}</p>
+              <p class="hidden lg:block" style="color:rgba(255,255,255,0.85);font-size:0.9rem;line-height:1.55;font-weight:500">{pkg.promise}</p>
+            </a>
+          ))}
+        </div>
+        <p class="reveal" style="color:rgba(255,255,255,0.5);font-family:var(--font-mono);font-size:0.6rem;margin-top:0.5rem">
+          {pk.disclaimer}
+        </p>
+      </div>
+    </InteractiveSection>
+
+    <!-- ═══ PANELS 03-07: Tier detail ═══ -->
+    {pk.packages.map((pkg, i) => (
+      <InteractiveSection id={pkg.id} label={pkg.name} imageUrl="" overlayColor={overlays[i]}>
+        <div class="container-wide flex flex-col" style="gap:clamp(1.25rem,2.5vw,2rem)">
+          <div class="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-6 items-end">
+            <div>
+              {'popular' in pkg && pkg.popular && (
+                <div class="label-mono reveal mb-2" style="color:var(--js-signal-green)">{pk.popular}</div>
+              )}
+              <div class="label-mono reveal mb-3" style="color:rgba(255,255,255,0.5)">{pkg.positioning}</div>
+              <h2 class="reveal reveal-delay-1 font-bold leading-tight tracking-tight" style={`font-size:clamp(2rem,5.5vw,5rem);color:${accents[i]};letter-spacing:-0.02em`}>
+                {pkg.name}
+              </h2>
+              <p class="reveal reveal-delay-2 mt-3" style="color:rgba(255,255,255,0.75);font-size:clamp(0.95rem,1.5vw,1.15rem);max-width:36rem">
+                {pk.forPrefix} {pkg.forWho.charAt(0).toLowerCase() + pkg.forWho.slice(1)}
+              </p>
+            </div>
+            <div class="reveal reveal-delay-2 text-right">
+              <div class="flex items-baseline justify-start lg:justify-end gap-1 flex-wrap">
+                <span style="font-family:var(--font-mono);font-size:0.7rem;color:rgba(255,255,255,0.5)">$</span>
+                <span class="font-bold leading-none tracking-tight" style="font-size:clamp(1.75rem,4vw,3.5rem);color:#fff;letter-spacing:-0.02em">{pkg.price}</span>
+              </div>
+              <p style="font-family:var(--font-mono);font-size:0.6rem;color:rgba(255,255,255,0.5);margin-top:0.25rem;text-transform:uppercase;letter-spacing:0.14em">{pk.perMonth}</p>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 lg:grid-cols-[1.5fr_1fr] gap-8 lg:gap-12">
+            <div class="reveal reveal-delay-2">
+              <div class="label-mono mb-3" style="color:rgba(255,255,255,0.4)">{pk.includesLabel}</div>
+              <ul class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2" style="list-style:none;padding:0">
+                {pkg.includes.map(item => (
+                  <li class="flex items-start gap-2" style="color:rgba(255,255,255,0.85);font-size:0.85rem;line-height:1.5">
+                    <span style={`color:${accents[i]};font-family:var(--font-mono);flex-shrink:0;margin-top:0.15rem`}>→</span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div class="reveal reveal-delay-3 flex flex-col gap-4" style="padding:1.5rem;background:rgba(0,0,0,0.35);border-left:2px solid;border-left-color:transparent">
+              <span style={`color:${accents[i]};font-family:var(--font-mono);font-size:0.6rem;letter-spacing:0.14em;font-weight:700;text-transform:uppercase`}>{pk.promiseLabel}</span>
+              <blockquote class="font-bold" style="color:#fff;font-size:clamp(1rem,1.6vw,1.25rem);line-height:1.45;letter-spacing:-0.01em;margin:0">
+                "{pkg.message}"
+              </blockquote>
+              <a
+                href={`mailto:hello@jiveshed.com?subject=${encodeURIComponent(`JiveShed — Interested in the ${pkg.name} package`)}`}
+                class="pkg-cta inline-flex items-center gap-2 px-5 py-3 mt-2"
+                style={`background:${accents[i]};color:#000;font-family:var(--font-mono);font-size:0.6rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;align-self:flex-start`}
+              >
+                {pk.pkgChoose} {pkg.name}
+                <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </InteractiveSection>
+    ))}
+
+    <!-- ═══ FINAL CTA ═══ -->
+    <InteractiveSection id="cta" label={pk.ctaLabel} imageUrl="" overlayColor="var(--js-overlay-green)">
+      <div class="container-wide flex flex-col items-start justify-center" style="gap:clamp(1.5rem,3vw,2.5rem);min-height:60vh">
+        <div class="label-mono reveal" style="color:rgba(255,255,255,0.5)">{pk.ctaLabel}</div>
+        <h2 class="reveal reveal-delay-1 font-bold leading-tight tracking-tight" style="font-size:clamp(2.25rem,7vw,6rem);color:#fff;letter-spacing:-0.02em;max-width:64rem">
+          {pk.ctaHeading} <em style="font-family:var(--font-serif);font-weight:400;font-style:italic">{pk.ctaHeadingItalic}</em>
+        </h2>
+        <p class="reveal reveal-delay-2" style="color:rgba(255,255,255,0.8);font-size:clamp(0.95rem,1.4vw,1.15rem);line-height:1.6;max-width:42rem">
+          {pk.ctaBody}
+        </p>
+        <div class="reveal reveal-delay-3 flex flex-wrap gap-3">
+          <a href="mailto:hello@jiveshed.com?subject=JiveShed%20Growth%20Audit" class="final-cta inline-flex items-center gap-3 px-8 py-4" style="background:var(--js-signal-green);color:#000;font-family:var(--font-mono);font-size:0.65rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase">
+            {pk.ctaCta1}
+            <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+            </svg>
+          </a>
+          <a href={`/${lang}/`} class="final-cta-outline inline-flex items-center gap-3 px-8 py-4" style="background:transparent;color:#fff;font-family:var(--font-mono);font-size:0.65rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;border:1px solid rgba(255,255,255,0.7)">
+            {pk.ctaCta2}
+          </a>
+        </div>
+      </div>
+    </InteractiveSection>
+
+  </main>
+  <Footer taglineHtml={`${t.footer.tagline.replace(/^(.+)\s(\S+\.)$/, '$1 <em>$2</em>')}`} />
+</Layout>
+
+<style>
+  .ladder-row { transition: background 0.2s ease; }
+  .ladder-row:hover { background: rgba(255,255,255,0.05); }
+  .intro-tier { transition: background 0.2s ease, transform 0.2s ease; }
+  .intro-tier:hover { background: rgba(255,255,255,0.08) !important; }
+  .intro-cta-primary { transition: background 0.25s ease, color 0.25s ease, outline 0.25s ease; }
+  .intro-cta-primary:hover { background: transparent !important; color: #fff !important; outline: 1px solid var(--js-coral); }
+  .intro-cta-outline { transition: background 0.2s ease, border-color 0.2s ease; }
+  .intro-cta-outline:hover { background: rgba(255,255,255,0.1) !important; border-color: #fff !important; }
+  .pkg-cta { transition: background 0.25s ease, color 0.25s ease, outline 0.25s ease; }
+  .pkg-cta:hover { background: transparent !important; color: #fff !important; outline: 1px solid currentColor; }
+  .final-cta { transition: background 0.25s ease, color 0.25s ease, outline 0.25s ease; }
+  .final-cta:hover { background: transparent !important; color: #fff !important; outline: 1px solid var(--js-signal-green); }
+  .final-cta-outline { transition: background 0.25s ease, color 0.25s ease; }
+  .final-cta-outline:hover { background: #fff !important; color: #000 !important; }
+</style>

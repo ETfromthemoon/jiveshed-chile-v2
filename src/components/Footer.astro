@@ -1,4 +1,6 @@
 ---
+interface Props { taglineHtml?: string; }
+const { taglineHtml = 'From attention <em>to action.</em>' } = Astro.props;
 const year = new Date().getFullYear();
 ---
 
@@ -12,7 +14,7 @@ const year = new Date().getFullYear();
     <span class="ft-sep" aria-hidden="true"></span>
     <a href="tel:+56936106328" class="ft-link">+56 9 3610 6328</a>
     <span class="ft-divider ft-divider-right" aria-hidden="true"></span>
-    <span class="ft-tagline">From attention <em>to action.</em></span>
+    <span class="ft-tagline" set:html={taglineHtml}></span>
   </div>
 </footer>
 

@@ -1,0 +1,213 @@
+---
+import type { Lang } from '../../i18n/translations';
+import { translations } from '../../i18n/translations';
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import Hero from '../../components/Hero.astro';
+import InteractiveSection from '../../components/InteractiveSection.astro';
+import Footer from '../../components/Footer.astro';
+
+export function getStaticPaths() {
+  return [
+    { params: { lang: 'es' } },
+    { params: { lang: 'pt' } },
+  ];
+}
+
+const { lang } = Astro.params as { lang: Lang };
+const t = translations[lang];
+const h = t.home;
+const summaryCards = h.summaryCards;
+const packages = h.packages;
+---
+
+<Layout
+  title={h.metaTitle}
+  description={h.metaDesc}
+  lang={lang}
+  pageTabs={h.tabs}
+>
+  <Nav lang={lang} />
+  <main>
+
+    <!-- ═══ PANEL 01: Hero ═══ -->
+    <div class="interactive-section" id="panel-inicio" role="region" aria-label={h.tabs[0].label}>
+      <Hero
+        eyebrow={t.hero.eyebrow}
+        h1Before={t.hero.h1Before}
+        h1Italic={t.hero.h1Italic}
+        h1Line2={t.hero.h1Line2}
+        tagline={t.hero.tagline}
+        body={t.hero.body}
+        supporting={t.hero.supporting}
+        cta1={t.hero.cta1}
+        cta2={t.hero.cta2}
+        packagesUrl={t.hero.packagesUrl}
+      />
+    </div>
+
+    <!-- ═══ PANEL 02: Summary ═══ -->
+    <InteractiveSection
+      id="summary"
+      label={h.summaryLabel}
+      imageUrl=""
+      overlayColor="var(--js-overlay-charcoal)"
+    >
+      <div class="container-wide flex flex-col" style="gap:clamp(1.25rem,2.5vw,2rem)">
+        <div class="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-6 items-end">
+          <div>
+            <div class="label-mono reveal mb-3" style="color:rgba(255,255,255,0.5)">{h.summaryLabel}</div>
+            <h2 class="reveal reveal-delay-1 font-bold leading-tight tracking-tight" style="font-size:clamp(1.75rem,4vw,3.25rem);color:#fff;letter-spacing:-0.02em;max-width:54rem">
+              {h.summaryHeading} <em style="font-family:var(--font-serif);font-weight:400;font-style:italic">{h.summaryHeadingItalic}</em>
+            </h2>
+          </div>
+          <a href={`/${lang}/system/`} class="reveal reveal-delay-2 idx-sum-cta inline-flex items-center gap-2 px-5 py-3 self-end flex-shrink-0" style="background:transparent;color:#fff;font-family:var(--font-mono);font-size:0.6rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;border:1px solid rgba(255,255,255,0.55)">
+            {h.exploreBtn}
+            <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+            </svg>
+          </a>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5" style="border-top:1px solid rgba(255,255,255,0.18)">
+          {summaryCards.map((c, i) => (
+            <a
+              href={`/${lang}/system/#panel-${c.anchor}`}
+              class={`reveal reveal-delay-${Math.min(i+1,4)} idx-sum-card flex flex-col gap-2 py-4 px-3 border-b`}
+              style={`border-color:rgba(255,255,255,0.1);border-right:${i < summaryCards.length - 1 ? '1px solid rgba(255,255,255,0.1)' : 'none'};text-decoration:none;cursor:pointer`}
+            >
+              <div class="flex items-center gap-2">
+                <span style={`font-family:var(--font-mono);font-size:0.55rem;letter-spacing:0.14em;color:${{
+                  '01':'var(--js-coral)','02':'var(--js-electric-blue)','03':'var(--js-signal-green)',
+                  '04':'var(--js-off-white)','05':'var(--js-electric-blue)',
+                }[c.num]};font-weight:700`}>{c.num}</span>
+                <span class="label-mono" style="color:rgba(255,255,255,0.5)">{c.label}</span>
+              </div>
+              <h3 class="font-bold leading-tight" style="font-size:clamp(0.95rem,1.3vw,1.1rem);color:#fff;letter-spacing:-0.01em">{c.title}</h3>
+              <p class="leading-relaxed flex-1" style="color:rgba(255,255,255,0.7);font-size:0.78rem">{c.body}</p>
+              <span class="idx-sum-card-arrow" style={`color:${{
+                '01':'var(--js-coral)','02':'var(--js-electric-blue)','03':'var(--js-signal-green)',
+                '04':'var(--js-off-white)','05':'var(--js-electric-blue)',
+              }[c.num]};font-family:var(--font-mono);font-size:0.7rem;margin-top:0.5rem`}>→</span>
+            </a>
+          ))}
+        </div>
+
+        <p class="reveal" style="color:rgba(255,255,255,0.6);font-size:0.85rem;max-width:48rem">
+          {h.exploreText} <a href={`/${lang}/system/`} class="idx-sum-inline-link" style="color:#fff;border-bottom:1px solid rgba(255,255,255,0.4)">{h.exploreLink}</a>
+        </p>
+      </div>
+    </InteractiveSection>
+
+    <!-- ═══ PANEL 03: Packages ═══ -->
+    <InteractiveSection
+      id="precios"
+      label={h.pkgLabel}
+      imageUrl=""
+      overlayColor="var(--js-overlay-coral)"
+    >
+      <div class="container-wide flex flex-col" style="gap:clamp(1.25rem,2.5vw,1.75rem)">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-end">
+          <div>
+            <div class="label-mono reveal mb-3" style="color:rgba(255,255,255,0.5)">{h.pkgLabel}</div>
+            <h2 class="reveal reveal-delay-1 font-bold leading-tight tracking-tight" style="font-size:clamp(1.75rem,4vw,3.25rem);color:#fff;letter-spacing:-0.02em">
+              {h.pkgHeading} <em style="font-family:var(--font-serif);font-weight:400;font-style:italic">{h.pkgHeadingItalic}</em>
+            </h2>
+          </div>
+          <p class="reveal reveal-delay-2 text-sm self-end leading-relaxed max-w-xs" style="color:rgba(255,255,255,0.65);font-size:0.8rem">
+            {h.pkgDisclaimer}
+          </p>
+        </div>
+
+        <div style="border-top:1px solid rgba(255,255,255,0.2)">
+          {packages.map((pkg, i) => (
+            <div class={`reveal reveal-delay-${Math.min(i+1,4)} border-b`} style="border-color:rgba(255,255,255,0.1)">
+              <div class="grid items-center gap-3 py-3" style="grid-template-columns:auto 1fr auto auto">
+                <div class="flex flex-col" style="min-width:7rem">
+                  {'popular' in pkg && pkg.popular && <p class="label-mono" style="color:var(--js-signal-green);margin-bottom:0.15rem">{translations[lang].packages.popular}</p>}
+                  <h3 class="font-bold leading-tight tracking-tight" style={`font-size:clamp(0.9rem,1.5vw,1.25rem);color:${'popular' in pkg && pkg.popular ? '#fff' : 'rgba(255,255,255,0.9)'};letter-spacing:-0.01em`}>{pkg.name}</h3>
+                  <p class="label-mono" style="color:rgba(255,255,255,0.4);margin-top:0.15rem">{pkg.positioning}</p>
+                </div>
+                <p class="hidden md:block" style="color:rgba(255,255,255,0.72);font-size:0.85rem;line-height:1.5;padding-right:1rem">{pkg.desc}</p>
+                <div class="text-right">
+                  <div class="flex items-baseline justify-end gap-0.5 flex-wrap">
+                    <span style="font-family:var(--font-mono);font-size:0.5rem;color:rgba(255,255,255,0.45)">$</span>
+                    <span class="font-bold leading-none tracking-tight" style="font-size:clamp(0.95rem,1.8vw,1.5rem);color:#fff;letter-spacing:-0.02em">{pkg.price}</span>
+                  </div>
+                  <p class="hidden sm:block" style="font-family:var(--font-mono);font-size:0.5rem;color:rgba(255,255,255,0.4);margin-top:0.15rem">{translations[lang].packages.perMonth}</p>
+                </div>
+                <a href={`/${lang}/packages/`} class="idx-pkg-cta inline-flex items-center gap-1 px-3 py-1.5 border font-bold uppercase tracking-widest flex-shrink-0" style="font-family:var(--font-mono);font-size:0.5rem;border-color:rgba(255,255,255,0.35);color:#fff;background:transparent">
+                  {h.pkgDetails}
+                </a>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div class="reveal flex flex-wrap gap-3 mt-3">
+          <a href={`/${lang}/packages/`} class="idx-svc-cta inline-flex items-center gap-3 px-6 py-3" style="background:var(--js-coral);color:#fff;font-family:var(--font-mono);font-size:0.6rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase">
+            {h.pkgCompare}
+          </a>
+        </div>
+      </div>
+    </InteractiveSection>
+
+    <!-- ═══ PANEL 04: CTA ═══ -->
+    <InteractiveSection
+      id="cta"
+      label={h.ctaLabel}
+      imageUrl=""
+      overlayColor="var(--js-overlay-green)"
+    >
+      <div class="container-wide flex flex-col items-start justify-center" style="gap:clamp(1.5rem,3vw,2.5rem);min-height:60vh">
+        <div class="label-mono reveal" style="color:rgba(255,255,255,0.5)">{h.ctaLabel}</div>
+        <h2 class="reveal reveal-delay-1 font-bold leading-tight tracking-tight" style="font-size:clamp(2.25rem,7vw,6rem);color:#fff;letter-spacing:-0.02em;max-width:64rem">
+          {h.ctaHeading} <em style="font-family:var(--font-serif);font-weight:400;font-style:italic">{h.ctaHeadingItalic}</em>
+        </h2>
+        <p class="reveal reveal-delay-2" style="color:rgba(255,255,255,0.8);font-size:clamp(0.95rem,1.4vw,1.15rem);line-height:1.6;max-width:42rem">
+          {h.ctaBody}
+        </p>
+        <div class="reveal reveal-delay-3 flex flex-wrap gap-3">
+          <a
+            href="mailto:hello@jiveshed.com?subject=JiveShed%20Growth%20Audit"
+            class="idx-cta-final inline-flex items-center gap-3 px-8 py-4"
+            style="background:var(--js-signal-green);color:#000;font-family:var(--font-mono);font-size:0.65rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase"
+          >
+            {h.ctaCta1}
+            <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+            </svg>
+          </a>
+          <a
+            href={`/${lang}/packages/`}
+            class="hero-cta-outline inline-flex items-center gap-3 px-8 py-4"
+            style="background:transparent;color:#fff;font-family:var(--font-mono);font-size:0.65rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;border:1px solid rgba(255,255,255,0.7)"
+          >
+            {h.ctaCta2}
+          </a>
+        </div>
+      </div>
+    </InteractiveSection>
+
+  </main>
+  <Footer taglineHtml={`${t.footer.tagline.replace(/^(.+)\s(\S+\.)$/, '$1 <em>$2</em>')}`} />
+</Layout>
+
+<style>
+  .idx-svc-cta { transition: background 0.25s ease, color 0.25s ease, outline 0.25s ease; }
+  .idx-svc-cta:hover { background: transparent !important; color: #fff !important; outline: 1px solid var(--js-coral); }
+  .idx-pkg-cta { transition: background 0.2s ease, border-color 0.2s ease; }
+  .idx-pkg-cta:hover { background: var(--js-coral) !important; border-color: var(--js-coral) !important; }
+  .idx-cta-final { transition: background 0.25s ease, color 0.25s ease, outline 0.25s ease; }
+  .idx-cta-final:hover { background: transparent !important; color: #fff !important; outline: 1px solid var(--js-signal-green); }
+  .hero-cta-outline { transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease; }
+  .hero-cta-outline:hover { background: #fff !important; color: #000 !important; border-color: #fff !important; }
+  .idx-sum-cta { transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease; }
+  .idx-sum-cta:hover { background: rgba(255,255,255,0.1) !important; border-color: #fff !important; }
+  .idx-sum-card { transition: background 0.2s ease, transform 0.2s ease; }
+  .idx-sum-card:hover { background: rgba(255,255,255,0.05); }
+  .idx-sum-card:hover .idx-sum-card-arrow { transform: translateX(4px); }
+  .idx-sum-card-arrow { transition: transform 0.2s ease; display: inline-block; }
+  .idx-sum-inline-link { transition: color 0.2s ease, border-color 0.2s ease; text-decoration: none; }
+  .idx-sum-inline-link:hover { color: var(--js-coral) !important; border-color: var(--js-coral) !important; }
+</style>

@@ -1,6 +1,28 @@
 ---
-// HERO v2 — contenido literal de "JIVESHED CONTENIDO v2.md"
-// Doc lines 73-89: hero headline, body, tagline, buttons, supporting line (traducida al inglés)
+interface Props {
+  eyebrow?: string;
+  h1Before?: string;
+  h1Italic?: string;
+  h1Line2?: string;
+  tagline?: string;
+  body?: string;
+  supporting?: string;
+  cta1?: string;
+  cta2?: string;
+  packagesUrl?: string;
+}
+const {
+  eyebrow   = 'AI-integrated Growth Experience Agency · Chile',
+  h1Before  = 'AI-integrated',
+  h1Italic  = 'growth experiences',
+  h1Line2   = 'for Chilean businesses.',
+  tagline   = 'From attention to action.',
+  body      = 'We help SMEs, restaurants, clinics, real estate agents, ecommerce stores, tourism brands, and B2B companies turn social media, WhatsApp, Google, ads, and CRM into one connected growth system.',
+  supporting = 'More visibility. More WhatsApp messages. More bookings. More sales. More returning customers.',
+  cta1      = 'Request a growth audit',
+  cta2      = 'See service packages',
+  packagesUrl = '/packages/',
+} = Astro.props;
 ---
 
 <section
@@ -16,7 +38,7 @@
     <div class="flex items-center justify-between mb-6 reveal">
       <span class="label-mono flex items-center gap-2" style="color:rgba(255,255,255,0.6)">
         <span style="display:inline-block;width:5px;height:5px;border-radius:50%;background:var(--js-signal-green)"></span>
-        AI-integrated Growth Experience Agency · Chile
+        {eyebrow}
       </span>
       <span class="hidden md:block label-mono" style="color:rgba(255,255,255,0.5)">JiveShed</span>
     </div>
@@ -27,7 +49,7 @@
         class="text-reveal-inner font-bold leading-none"
         style="font-size:clamp(1.5rem, 5.2vw, 5.5rem);color:#fff;letter-spacing:-0.02em;text-shadow:0 2px 24px rgba(0,0,0,0.7)"
       >
-        AI-integrated <em style="font-family:var(--font-serif);font-weight:400;font-style:italic">growth experiences</em>
+        {h1Before} <em style="font-family:var(--font-serif);font-weight:400;font-style:italic">{h1Italic}</em>
       </h1>
     </div>
     <div class="text-reveal revealed-delay-1" style="line-height:1;overflow:hidden">
@@ -35,17 +57,17 @@
         class="text-reveal-inner block font-bold leading-none"
         style="font-size:clamp(1.5rem, 5.2vw, 5.5rem);color:#fff;letter-spacing:-0.02em;text-shadow:0 2px 24px rgba(0,0,0,0.7)"
       >
-        for Chilean businesses.
+        {h1Line2}
       </span>
     </div>
 
-    <!-- Tagline secundario — doc línea 79 -->
+    <!-- Tagline secundario -->
     <div class="text-reveal revealed-delay-2" style="line-height:1;overflow:hidden;margin-top:clamp(0.5rem,1.5vw,1rem)">
       <span
         class="text-reveal-inner block italic leading-none"
         style="font-family:var(--font-serif);font-size:clamp(1rem, 3vw, 2.5rem);color:rgba(255,255,255,0.85);letter-spacing:-0.01em;text-shadow:0 2px 24px rgba(0,0,0,0.7)"
       >
-        From attention to action.
+        {tagline}
       </span>
     </div>
 
@@ -58,9 +80,9 @@
     <!-- Body + CTAs — doc líneas 77 + 83-89 (supporting line traducida) -->
     <div class="reveal reveal-delay-2 grid grid-cols-1 md:grid-cols-[1fr_auto] gap-6 items-end" style="padding-bottom:clamp(2rem, 4vw, 4rem)">
       <p class="text-base leading-relaxed max-w-2xl" style="color:rgba(255,255,255,0.85)">
-        We help SMEs, restaurants, clinics, real estate agents, ecommerce stores, tourism brands, and B2B companies turn social media, WhatsApp, Google, ads, and CRM into one connected growth system.
+        {body}
         <span style="display:block;margin-top:0.75rem;color:rgba(255,255,255,0.7);font-size:0.85rem">
-          More visibility. More WhatsApp messages. More bookings. More sales. More returning customers.
+          {supporting}
         </span>
       </p>
       <div class="flex flex-wrap gap-3 flex-shrink-0">
@@ -70,17 +92,17 @@
           class="hero-cta inline-flex items-center gap-3 px-8 py-4"
           style="background:var(--js-coral);color:#fff;font-family:var(--font-mono);font-size:0.65rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;cursor:pointer;border:none"
         >
-          Request a growth audit
+          {cta1}
           <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
           </svg>
         </button>
         <a
-          href="/packages/"
+          href={packagesUrl}
           class="hero-cta-outline inline-flex items-center gap-3 px-8 py-4"
           style="background:transparent;color:#fff;font-family:var(--font-mono);font-size:0.65rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;border:1px solid rgba(255,255,255,0.7)"
         >
-          See service packages
+          {cta2}
         </a>
       </div>
     </div>

@@ -8,6 +8,7 @@ interface Props {
   description?: string;
   image?: string;
   pageTabs?: Tab[];
+  lang?: string;
 }
 
 const {
@@ -15,13 +16,14 @@ const {
   description = 'JiveShed builds AI-integrated growth systems that connect social media, WhatsApp, Google, ads, CRM, and retention for Chilean businesses.',
   image = '/og-image.svg',
   pageTabs,
+  lang = 'en',
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={lang}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
