@@ -64,7 +64,7 @@ const s = t.system;
         </div>
         <div class="reveal reveal-delay-2 flex flex-wrap items-stretch" style="gap:1px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.12)">
           {s.systemSteps.map((step, i) => (
-            <div class="flex-1 flex flex-col items-start gap-2" style={`min-width:120px;padding:1rem 1.25rem;background:rgba(0,0,0,${0.35 + i * 0.04})`}>
+            <div class="sys-step flex-1 flex flex-col items-start gap-2" style={`min-width:120px;padding:1rem 1.25rem;background:rgba(0,0,0,${0.35 + i * 0.04})`}>
               <span style="font-family:var(--font-mono);font-size:0.55rem;letter-spacing:0.14em;color:rgba(255,255,255,0.4);font-weight:700">{step.num}</span>
               <h3 class="font-bold leading-tight" style="font-size:clamp(0.85rem,1.3vw,1rem);color:#fff;letter-spacing:-0.01em">{step.label}</h3>
             </div>
@@ -176,4 +176,8 @@ const s = t.system;
   .sys-cta-primary:hover { background: transparent !important; color: #fff !important; outline: 1px solid var(--js-coral); }
   .sys-cta-outline { transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease; }
   .sys-cta-outline:hover { background: #fff !important; color: #000 !important; border-color: #fff !important; }
+
+  @media (max-width: 639px) {
+    .sys-step { min-width: calc(50% - 1px) !important; flex: 0 0 calc(50% - 1px) !important; }
+  }
 </style>

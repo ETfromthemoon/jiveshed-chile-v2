@@ -178,4 +178,18 @@ import Footer from '../../components/Footer.astro';
     transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
   }
   .ct-cta-out:hover { background: #fff; color: #000; border-color: #fff; }
+
+  /* ── Mobile ─────────────────────────────────────────── */
+  @media (max-width: 1023px) {
+    .ct-wrap {
+      overflow-y: auto;
+      align-items: flex-start;
+      padding-top: 2.5rem;
+      padding-bottom: calc(var(--btab-h) + 2.5rem);
+    }
+    .ct-heading { font-size: clamp(2.25rem, 13vw, 5rem); }
+    .ct-channel-label { min-width: 5.5rem; }
+    .ct-actions { flex-direction: column; }
+    .ct-cta, .ct-cta-out { width: 100%; justify-content: center; box-sizing: border-box; }
+  }
 </style>

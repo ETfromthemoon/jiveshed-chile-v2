@@ -202,4 +202,11 @@ const accents = ['rgba(255,255,255,0.85)', 'var(--js-signal-green)', 'var(--js-e
   .final-cta:hover { background: transparent !important; color: #fff !important; outline: 1px solid var(--js-signal-green); }
   .final-cta-outline { transition: background 0.25s ease, color 0.25s ease; }
   .final-cta-outline:hover { background: #fff !important; color: #000 !important; }
+
+  @media (max-width: 1023px) {
+    .ladder-row { grid-template-columns: 1fr auto !important; }
+  }
+  @media (max-width: 639px) {
+    .intro-tier { min-width: 0; }
+  }
 </style>
