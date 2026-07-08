@@ -12,14 +12,23 @@ interface Props {
 }
 
 const {
-  title = 'JiveShed — From attention to action. AI-integrated growth systems for Chilean businesses.',
-  description = 'JiveShed builds AI-integrated growth systems that connect social media, WhatsApp, Google, ads, CRM, and retention for Chilean businesses.',
+  title = 'JiveShed — From attention to action. AI INTEGRATED growth systems for Chilean businesses.',
+  description = 'JiveShed builds AI INTEGRATED growth systems that connect social media, WhatsApp, Google, ads, CRM, and retention for Chilean businesses.',
   image = '/og-image.svg',
   pageTabs,
   lang = 'en',
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+
+// Floating contact CTA — localized label + href
+const contactLabels: Record<string, string> = {
+  en: 'Schedule a call',
+  es: 'Agenda una llamada',
+  pt: 'Agende uma chamada',
+};
+const contactLabel = contactLabels[lang] ?? contactLabels.en;
+const contactHref = lang === 'en' ? '/contacto/' : `/${lang}/contacto/`;
 ---
 
 <!doctype html>
@@ -71,7 +80,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <div class="cursor-ring" id="cursor-ring" aria-hidden="true"></div>
 
     <!-- Floating Contacto CTA — visible on all pages -->
-    <a href="/contacto/" class="global-contact-cta" aria-label="Contactar JiveShed">Contacto</a>
+    <a href={contactHref} class="global-contact-cta" aria-label={contactLabel}>{contactLabel}</a>
 
     <slot />
 

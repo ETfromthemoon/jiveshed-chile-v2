@@ -344,6 +344,8 @@
     -webkit-overflow-scrolling: touch;
     overscroll-behavior: contain;          /* no rebota a la página padre */
     justify-content: flex-start;            /* contenido fluye desde arriba */
+    /* deja libre el CTA flotante superior (top:1.1rem + ~36px de alto) */
+    padding-top: 4.75rem;
     /* reserva espacio para tabs bar + bottom tabs */
     padding-bottom: calc(var(--btab-h) + 4rem);
     scroll-behavior: smooth;

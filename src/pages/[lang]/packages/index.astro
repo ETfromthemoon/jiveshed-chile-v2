@@ -32,7 +32,7 @@ const accents = ['rgba(255,255,255,0.85)', 'var(--js-signal-green)', 'var(--js-e
         <p class="reveal reveal-delay-2" style="color:rgba(255,255,255,0.8);font-size:clamp(0.95rem,1.4vw,1.2rem);line-height:1.6;max-width:46rem">
           {pk.introBody}
         </p>
-        <div class="reveal reveal-delay-3 grid grid-cols-2 sm:grid-cols-5 gap-px w-full" style="background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.12);margin-top:1rem">
+        <div class="reveal reveal-delay-3 pkg-tier-strip" style="margin-top:1rem">
           {pk.packages.map((pkg, i) => (
             <a href={`#panel-${pkg.id}`} data-open-panel={pkg.id} class="intro-tier flex flex-col gap-1 p-4 text-center" style="background:rgba(0,0,0,0.4);text-decoration:none">
               {'popular' in pkg && pkg.popular && <span class="label-mono" style="color:var(--js-signal-green);margin-bottom:0.15rem">{pk.popular}</span>}
@@ -118,12 +118,12 @@ const accents = ['rgba(255,255,255,0.85)', 'var(--js-signal-green)', 'var(--js-e
                 {pk.forPrefix} {pkg.forWho.charAt(0).toLowerCase() + pkg.forWho.slice(1)}
               </p>
             </div>
-            <div class="reveal reveal-delay-2 text-right">
+            <div class="reveal reveal-delay-2">
               <div class="flex items-baseline justify-start lg:justify-end gap-1 flex-wrap">
                 <span style="font-family:var(--font-mono);font-size:0.7rem;color:rgba(255,255,255,0.5)">$</span>
                 <span class="font-bold leading-none tracking-tight" style="font-size:clamp(1.75rem,4vw,3.5rem);color:#fff;letter-spacing:-0.02em">{pkg.price}</span>
               </div>
-              <p style="font-family:var(--font-mono);font-size:0.6rem;color:rgba(255,255,255,0.5);margin-top:0.25rem;text-transform:uppercase;letter-spacing:0.14em">{pk.perMonth}</p>
+              <p class="lg:text-right" style="font-family:var(--font-mono);font-size:0.6rem;color:rgba(255,255,255,0.5);margin-top:0.25rem;text-transform:uppercase;letter-spacing:0.14em">{pk.perMonth}</p>
             </div>
           </div>
           <div class="grid grid-cols-1 lg:grid-cols-[1.5fr_1fr] gap-8 lg:gap-12">
@@ -206,7 +206,19 @@ const accents = ['rgba(255,255,255,0.85)', 'var(--js-signal-green)', 'var(--js-e
   @media (max-width: 1023px) {
     .ladder-row { grid-template-columns: 1fr auto !important; }
   }
-  @media (max-width: 639px) {
-    .intro-tier { min-width: 0; }
+  .pkg-tier-strip {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(130px, 1fr));
+    gap: 1px;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.12);
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    width: 100%;
+  }
+  .pkg-tier-strip::-webkit-scrollbar { display: none; }
+  @media (min-width: 640px) {
+    .pkg-tier-strip { grid-template-columns: repeat(5, 1fr); }
   }
 </style>
