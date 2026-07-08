@@ -25,7 +25,7 @@ const packages = [
       'Google Business Profile cleanup',
       '6–8 monthly posts/stories',
       '2 short Films',
-      'AI-integrated captions',
+      'AI INTEGRATED captions',
       'Basic review response templates',
       'Monthly mini-report',
       'Secret bonus',
@@ -114,7 +114,7 @@ const packages = [
     positioning: 'Outsourced growth department',
     forWho: 'Established businesses that want a full growth department.',
     bestFor: 'Larger SMEs, chains, developers, established brands',
-    promise: 'Full-funnel AI-integrated growth across content, paid media, WhatsApp, CRM, and retention.',
+    promise: 'Full-funnel AI INTEGRATED growth across content, paid media, WhatsApp, CRM, and retention.',
     includes: [
       'Multi-channel strategy',
       '60–100 monthly content assets',
@@ -130,7 +130,7 @@ const packages = [
       'Quarterly growth roadmap',
       'Executive reporting',
     ],
-    message: 'A complete AI-integrated digital growth department, without having to hire one internally.',
+    message: 'A complete AI INTEGRATED digital growth department, without having to hire one internally.',
     overlay: 'var(--js-overlay-charcoal)',
     accent: '#fff',
   },
@@ -150,7 +150,7 @@ const ladderTabs = [
 
 <Layout
   title="Packages — JiveShed | From Starter to Diamond"
-  description="Five growth packages from $300,000 to $10,000,000 CLP per month. Starter, Bronze, Silver, Platinum, Diamond. AI-integrated growth systems for Chilean businesses."
+  description="Five growth packages from $300,000 to $10,000,000 CLP per month. Starter, Bronze, Silver, Platinum, Diamond. AI INTEGRATED growth systems for Chilean businesses."
   pageTabs={ladderTabs}
 >
   <Nav />
@@ -169,11 +169,11 @@ const ladderTabs = [
           Choose your <em style="font-family:var(--font-serif);font-weight:400;font-style:italic">growth system.</em>
         </h1>
         <p class="reveal reveal-delay-2" style="color:rgba(255,255,255,0.8);font-size:clamp(0.95rem,1.4vw,1.2rem);line-height:1.6;max-width:46rem">
-          Five tiers. From presence repair to a full AI-integrated growth department — designed so every business can start where it makes sense and scale when it's ready.
+          Five tiers. From presence repair to a full AI INTEGRATED growth department — designed so every business can start where it makes sense and scale when it's ready.
         </p>
 
         <!-- Tier highlight strip -->
-        <div class="reveal reveal-delay-3 grid grid-cols-2 sm:grid-cols-5 gap-px w-full" style="background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.12);margin-top:1rem">
+        <div class="reveal reveal-delay-3 pkg-tier-strip" style="margin-top:1rem">
           {packages.map((pkg) => (
             <a href={`#panel-${pkg.id}`} data-open-panel={pkg.id} class="intro-tier flex flex-col gap-1 p-4 text-center" style="background:rgba(0,0,0,0.4);text-decoration:none">
               {pkg.popular && <span class="label-mono" style="color:var(--js-signal-green);margin-bottom:0.15rem">Popular</span>}
@@ -275,12 +275,12 @@ const ladderTabs = [
                 For {pkg.forWho.charAt(0).toLowerCase() + pkg.forWho.slice(1)}
               </p>
             </div>
-            <div class="reveal reveal-delay-2 text-right">
+            <div class="reveal reveal-delay-2">
               <div class="flex items-baseline justify-start lg:justify-end gap-1 flex-wrap">
                 <span style="font-family:var(--font-mono);font-size:0.7rem;color:rgba(255,255,255,0.5)">$</span>
                 <span class="font-bold leading-none tracking-tight" style="font-size:clamp(1.75rem,4vw,3.5rem);color:#fff;letter-spacing:-0.02em">{pkg.price}</span>
               </div>
-              <p style="font-family:var(--font-mono);font-size:0.6rem;color:rgba(255,255,255,0.5);margin-top:0.25rem;text-transform:uppercase;letter-spacing:0.14em">CLP / month</p>
+              <p class="lg:text-right" style="font-family:var(--font-mono);font-size:0.6rem;color:rgba(255,255,255,0.5);margin-top:0.25rem;text-transform:uppercase;letter-spacing:0.14em">CLP / month</p>
             </div>
           </div>
 
@@ -368,6 +368,23 @@ const ladderTabs = [
   .ladder-row { transition: background 0.2s ease; }
   .ladder-row:hover { background: rgba(255,255,255,0.05); }
 
+  /* Tier strip: scrollable row on mobile, 5-col grid on sm+ */
+  .pkg-tier-strip {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(130px, 1fr));
+    gap: 1px;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.12);
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    width: 100%;
+  }
+  .pkg-tier-strip::-webkit-scrollbar { display: none; }
+  @media (min-width: 640px) {
+    .pkg-tier-strip { grid-template-columns: repeat(5, 1fr); }
+  }
+
   .intro-tier { transition: background 0.2s ease, transform 0.2s ease; }
   .intro-tier:hover { background: rgba(255,255,255,0.08) !important; }
 
@@ -387,9 +404,5 @@ const ladderTabs = [
 
   @media (max-width: 1023px) {
     .ladder-row { grid-template-columns: 1fr auto !important; }
-  }
-  @media (max-width: 639px) {
-    /* Tier strip: 2 cols → 1 col on very small screens */
-    .intro-tier { min-width: 0; }
   }
 </style>

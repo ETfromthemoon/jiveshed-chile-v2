@@ -12,8 +12,8 @@ interface Props {
   packagesUrl?: string;
 }
 const {
-  eyebrow   = 'AI-integrated Growth Experience Agency · Chile',
-  h1Before  = 'AI-integrated',
+  eyebrow   = 'AI INTEGRATED Growth Experience Agency · Chile',
+  h1Before  = 'AI INTEGRATED',
   h1Italic  = 'growth experiences',
   h1Line2   = 'for Chilean businesses.',
   tagline   = 'From attention to action.',
@@ -34,7 +34,7 @@ const {
   <div class="hero-overlay" aria-hidden="true"></div>
   <div class="container-wide relative z-10" style="padding-top:clamp(2.5rem, 5vw, 4rem);padding-bottom:0;flex:1;display:flex;flex-direction:column;justify-content:center;position:relative;z-index:2">
 
-    <!-- Eyebrow — brand doc: AI-integrated Growth Experience Agency -->
+    <!-- Eyebrow — brand doc: AI INTEGRATED Growth Experience Agency -->
     <div class="flex items-center justify-between mb-6 reveal">
       <span class="label-mono flex items-center gap-2" style="color:rgba(255,255,255,0.6)">
         <span style="display:inline-block;width:5px;height:5px;border-radius:50%;background:var(--js-signal-green)"></span>
@@ -139,6 +139,8 @@ const {
       height: calc(100dvh - var(--btab-h));
       padding-bottom: 1rem;
     }
+    /* deja libre el CTA flotante superior (top:1.1rem + ~36px) */
+    .hero-section .container-wide { padding-top: 4.75rem !important; }
     .hero-section::-webkit-scrollbar { width: 3px; }
     .hero-section::-webkit-scrollbar-track { background: transparent; }
     .hero-section::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.18); border-radius: 2px; }
