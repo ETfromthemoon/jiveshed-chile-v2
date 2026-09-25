@@ -1,28 +1,14 @@
 ---
-interface Props {
-  eyebrow?: string;
-  h1Before?: string;
-  h1Italic?: string;
-  h1Line2?: string;
-  tagline?: string;
-  body?: string;
-  supporting?: string;
-  cta1?: string;
-  cta2?: string;
-  packagesUrl?: string;
-}
-const {
-  eyebrow   = 'AI INTEGRATED Growth Experience Agency · Chile',
-  h1Before  = 'AI INTEGRATED',
-  h1Italic  = 'growth experiences',
-  h1Line2   = 'for Chilean businesses.',
-  tagline   = 'From attention to action.',
-  body      = 'We help SMEs, restaurants, clinics, real estate agents, ecommerce stores, tourism brands, and B2B companies turn social media, WhatsApp, Google, ads, and CRM into one connected growth system.',
-  supporting = 'More visibility. More WhatsApp messages. More bookings. More sales. More returning customers.',
-  cta1      = 'Request a growth audit',
-  cta2      = 'See service packages',
-  packagesUrl = '/packages/',
-} = Astro.props;
+import type { Lang } from '../i18n/translations';
+import { translations } from '../i18n/translations';
+import { localePath } from '../i18n/utils';
+
+interface Props { lang?: Lang; }
+const { lang = 'en' } = Astro.props;
+const { eyebrow, h1Before, h1Italic, h1Line2, tagline, body, supporting, cta1, cta2, marquee } = translations[lang].hero;
+const packagesUrl = localePath(lang, '/packages/');
+// Se duplica la lista para que el marquee haga loop sin salto
+const marqueeItems = [...marquee, ...marquee];
 ---
 
 <section
@@ -114,10 +100,7 @@ const {
     aria-hidden="true"
   >
     <div class="marquee-track">
-      {[
-        'STRATEGY','CONTENT','TRAFFIC','WHATSAPP','CONVERSION','RETENTION','ANALYTICS',
-        'STRATEGY','CONTENT','TRAFFIC','WHATSAPP','CONVERSION','RETENTION','ANALYTICS',
-      ].map((item) => (
+      {marqueeItems.map((item) => (
         <span class="flex-shrink-0 px-8 label-mono" style="white-space:nowrap">
           {item}&nbsp;&nbsp;·
         </span>

@@ -1,43 +1,70 @@
-# Astro Starter Kit: Minimal
+# JiveShed — sitio web v2
 
-```sh
-npm create astro@latest -- --template minimal
-```
+Sitio de marketing de JiveShed ("From attention to action"), en inglés, español y portugués.
+Astro 6 + Tailwind 4 + React (solo para el fondo animado). Es un sitio estático.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Comandos
 
-## 🚀 Project Structure
+| Comando           | Acción                                        |
+| :---------------- | :-------------------------------------------- |
+| `npm install`     | Instala dependencias (Node ≥ 22.12)           |
+| `npm run dev`     | Servidor local en `http://localhost:4322`     |
+| `npm run build`   | Genera el sitio en `./dist/`                  |
+| `npm run preview` | Sirve el build localmente                     |
 
-Inside of your Astro project, you'll see the following folders and files:
+## Rutas
+
+| EN (raíz)     | ES / PT                       | Contenido                              |
+| :------------ | :---------------------------- | :------------------------------------- |
+| `/`           | `/es/`, `/pt/`                | Home (hero, resumen, paquetes, CTA)    |
+| `/system/`    | `/es/system/`, `/pt/system/`  | El sistema JiveShed                    |
+| `/packages/`  | `/es/packages/`, …            | Los 5 paquetes (Starter → Diamond)     |
+| `/contacto/`  | `/es/contacto/`, …            | Contacto + formulario de Growth Audit  |
+
+## Estructura
 
 ```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+src/
+├── config/site.ts          # correo, número de WhatsApp y helpers de enlaces
+├── i18n/
+│   ├── translations.ts     # TODOS los textos (en / es / pt)
+│   └── utils.ts            # rutas localizadas, hreflang, formato de precios
+├── views/                  # una vista por página, compartida por los 3 idiomas
+├── pages/                  # rutas finas: solo eligen vista + idioma
+├── components/             # Nav, Hero, Footer, AuditForm, InteractiveSection
+├── layouts/Layout.astro    # <head> (SEO, hreflang, OG), cursor, sistema de paneles
+└── styles/global.css       # tokens de marca y sistema de paneles
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## Cómo hacer cambios habituales
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+- **Cambiar un texto:** edítalo en `src/i18n/translations.ts`, en los tres idiomas.
+  Las páginas no llevan texto escrito directo.
+- **Cambiar un precio:** `price` es un número (`1_500_000`); se formatea solo
+  según el idioma (`1,500,000` en EN y `1.500.000` en ES/PT).
+- **Cambiar correo o WhatsApp:** `src/config/site.ts`.
+- **Cambiar el dominio:** `site` en `astro.config.mjs`. El canonical, hreflang,
+  la imagen OG, el sitemap y `robots.txt` salen de ahí.
 
-Any static assets, like images, can be placed in the `public/` directory.
+## Formulario de Growth Audit
 
-## 🧞 Commands
+`src/components/AuditForm.astro` no necesita backend: arma un mensaje con los datos
+y abre WhatsApp (o el correo, como alternativa). Los botones "Elegir <paquete>"
+enlazan a `/contacto/?paquete=<id>#auditoria` y preseleccionan el paquete.
+Los leads **no se guardan** en ningún servidor: llegan como un mensaje de WhatsApp o un correo.
 
-All commands are run from the root of the project, from a terminal:
+## Navegación por paneles
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+Cada página es una serie de paneles a pantalla completa. En escritorio la rueda
+del mouse recorre primero el contenido del panel activo y, al llegar al borde,
+pasa al siguiente. En móvil se cambia de panel con las tabs y el contenido
+se desplaza normalmente.
 
-## 👀 Want to learn more?
+## Deploy (Vercel)
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+El hosting es **Vercel**, conectado al repo de GitHub:
+
+- Cada push a una rama o PR genera una **URL de preview**.
+- Un merge a `master` publica en **producción**.
+- Las cabeceras de caché y seguridad están en `vercel.json`. Vercel sirve
+  `404.html` automáticamente, así que no hace falta configurar redirecciones.

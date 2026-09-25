@@ -1,0 +1,247 @@
+---
+/* Formulario de Growth Audit.
+   No depende del hosting: al enviar arma un mensaje con los datos y abre
+   WhatsApp (canal principal) o, como alternativa, el cliente de correo.
+   Acepta ?paquete=<id> en la URL para preseleccionar el paquete. */
+import type { Lang } from '../i18n/translations';
+import { translations } from '../i18n/translations';
+
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const a = translations[lang].audit;
+const packages = translations[lang].packages.packages;
+
+const labels = {
+  greeting: a.greeting,
+  subject: a.subject,
+  name: a.name,
+  business: a.business,
+  industry: a.industry,
+  pkg: a.pkg,
+  link: a.link,
+  message: a.goal,
+};
+---
+
+<form
+  id="auditoria"
+  class="af"
+  novalidate
+  data-labels={JSON.stringify(labels)}
+  aria-labelledby="af-heading"
+>
+  <h2 id="af-heading" class="af-heading">{a.heading}</h2>
+  <p class="af-intro">{a.intro}</p>
+
+  <div class="af-grid">
+    <label class="af-field">
+      <span class="af-label">{a.name}</span>
+      <input name="name" type="text" autocomplete="name" required maxlength="80" />
+    </label>
+    <label class="af-field">
+      <span class="af-label">{a.business}</span>
+      <input name="business" type="text" autocomplete="organization" required maxlength="100" />
+    </label>
+    <label class="af-field">
+      <span class="af-label">{a.industry} <em>({a.optional})</em></span>
+      <select name="industry">
+        <option value="">{a.select}</option>
+        {a.industries.map((ind) => <option value={ind}>{ind}</option>)}
+      </select>
+    </label>
+    <label class="af-field">
+      <span class="af-label">{a.pkg} <em>({a.optional})</em></span>
+      <select name="pkg">
+        <option value="">{a.notSure}</option>
+        {packages.map((p) => <option value={p.name} data-id={p.id}>{p.name}</option>)}
+      </select>
+    </label>
+    <label class="af-field af-span">
+      <span class="af-label">{a.link} <em>({a.optional})</em></span>
+      <input name="link" type="text" inputmode="url" maxlength="200" />
+    </label>
+    <label class="af-field af-span">
+      <span class="af-label">{a.message} <em>({a.optional})</em></span>
+      <textarea name="message" rows="3" maxlength="800"></textarea>
+    </label>
+  </div>
+
+  <p class="af-error" role="alert" hidden>{a.required}</p>
+
+  <div class="af-actions">
+    <button type="submit" class="af-submit">
+      {a.submitWhatsApp}
+      <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+      </svg>
+    </button>
+    <button type="button" class="af-email" data-send-email>{a.submitEmail}</button>
+  </div>
+</form>
+
+<style>
+  .af {
+    scroll-margin-top: 5rem; /* llegada desde enlaces #auditoria */
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    width: 100%;
+    padding: clamp(1.25rem, 2.5vw, 1.75rem);
+    background: rgba(0, 0, 0, 0.45);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+  .af-heading {
+    font-weight: 700;
+    font-size: clamp(1.15rem, 1.8vw, 1.45rem);
+    letter-spacing: -0.01em;
+    color: #fff;
+    margin: 0;
+  }
+  .af-intro { color: rgba(255, 255, 255, 0.68); font-size: 0.85rem; line-height: 1.55; margin: 0; }
+  .af-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 1rem; }
+  .af-span { grid-column: 1 / -1; }
+  .af-field { display: flex; flex-direction: column; gap: 0.35rem; }
+  .af-label {
+    font-family: var(--font-mono);
+    font-size: 0.55rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.6);
+  }
+  .af-label em { font-style: normal; font-weight: 400; color: rgba(255, 255, 255, 0.38); text-transform: none; letter-spacing: 0.04em; }
+  .af input, .af select, .af textarea {
+    width: 100%;
+    font-family: var(--font-display);
+    font-size: 0.9rem;
+    color: #fff;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 0;
+    padding: 0.6rem 0.7rem;
+    transition: border-color 0.2s ease, background 0.2s ease;
+  }
+  .af textarea { resize: vertical; min-height: 4.5rem; }
+  .af select option { background: #111; color: #fff; }
+  .af input::placeholder { color: rgba(255, 255, 255, 0.3); }
+  .af input:hover, .af select:hover, .af textarea:hover { border-color: rgba(255, 255, 255, 0.35); }
+  .af input:focus, .af select:focus, .af textarea:focus {
+    outline: none;
+    border-color: var(--js-coral);
+    background: rgba(255, 255, 255, 0.07);
+  }
+  .af [aria-invalid='true'] { border-color: var(--js-coral); }
+  .af-error { color: var(--js-coral); font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.06em; margin: 0; }
+  .af-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem 1.25rem; }
+  .af-submit {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.95rem 1.6rem;
+    background: var(--js-signal-green);
+    color: #000;
+    border: none;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.25s ease, color 0.25s ease, outline 0.25s ease;
+  }
+  .af-submit:hover { background: transparent; color: #fff; outline: 1px solid var(--js-signal-green); }
+  .af-email {
+    background: none;
+    border: none;
+    padding: 0.25rem 0;
+    color: rgba(255, 255, 255, 0.7);
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    transition: color 0.2s ease, border-color 0.2s ease;
+  }
+  .af-email:hover { color: var(--js-coral); border-color: var(--js-coral); }
+
+  @media (max-width: 639px) {
+    .af-grid { grid-template-columns: 1fr; }
+    /* 16px evita el zoom automático de iOS al enfocar un campo */
+    .af input, .af select, .af textarea { font-size: 16px; }
+    .af-submit { width: 100%; justify-content: center; }
+  }
+</style>
+
+<script>
+  import { whatsappUrl, mailtoUrl } from '../config/site';
+
+  type Labels = Record<'greeting' | 'subject' | 'name' | 'business' | 'industry' | 'pkg' | 'link' | 'message', string>;
+  const FIELDS = ['name', 'business', 'industry', 'pkg', 'link', 'message'] as const;
+  const REQUIRED = ['name', 'business'] as const;
+
+  function initAuditForm(form: HTMLFormElement) {
+    const labels = JSON.parse(form.dataset.labels ?? '{}') as Labels;
+    const errorEl = form.querySelector<HTMLElement>('.af-error');
+
+    // Preselección de paquete desde ?paquete=silver
+    const pkgId = new URLSearchParams(window.location.search).get('paquete');
+    if (pkgId) {
+      const option = form.querySelector<HTMLOptionElement>(`select[name="pkg"] option[data-id="${CSS.escape(pkgId)}"]`);
+      if (option) option.selected = true;
+    }
+
+    function fieldValue(name: string): string {
+      const el = form.elements.namedItem(name) as HTMLInputElement | null;
+      return el ? el.value.trim() : '';
+    }
+
+    function validate(): boolean {
+      let isValid = true;
+      REQUIRED.forEach((name) => {
+        const el = form.elements.namedItem(name) as HTMLInputElement;
+        const isEmpty = el.value.trim() === '';
+        el.setAttribute('aria-invalid', String(isEmpty));
+        if (isEmpty && isValid) el.focus();
+        if (isEmpty) isValid = false;
+      });
+      if (errorEl) errorEl.hidden = isValid;
+      return isValid;
+    }
+
+    function buildMessage(): string {
+      const lines = FIELDS
+        .map((name) => ({ label: labels[name], value: fieldValue(name) }))
+        .filter((entry) => entry.value !== '')
+        .map((entry) => `${entry.label}: ${entry.value}`);
+      return [labels.greeting, '', ...lines].join('\n');
+    }
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (!validate()) return;
+      const url = whatsappUrl(buildMessage());
+      // Sin 'noopener' en features: con él window.open() siempre devuelve null.
+      const opened = window.open(url, '_blank');
+      if (opened) opened.opener = null;
+      else window.location.href = url;
+    });
+
+    form.querySelector('[data-send-email]')?.addEventListener('click', () => {
+      if (!validate()) return;
+      window.location.href = mailtoUrl(labels.subject, buildMessage());
+    });
+
+    // Limpia el estado de error en cuanto el usuario escribe
+    REQUIRED.forEach((name) => {
+      (form.elements.namedItem(name) as HTMLInputElement).addEventListener('input', (e) => {
+        (e.target as HTMLInputElement).setAttribute('aria-invalid', 'false');
+        if (errorEl && REQUIRED.every((n) => fieldValue(n) !== '')) errorEl.hidden = true;
+      });
+    });
+  }
+
+  document.querySelectorAll<HTMLFormElement>('form.af').forEach(initAuditForm);
+</script>
