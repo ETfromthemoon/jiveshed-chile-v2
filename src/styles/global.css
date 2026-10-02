@@ -319,18 +319,25 @@
   position: relative;
   z-index: 2;
   height: 100%;
-  overflow: hidden;
+  /* Si el contenido supera la pantalla (p. ej. Diamond en un laptop de 720px)
+     se puede recorrer en vez de quedar cortado. La rueda lo recorre antes de
+     cambiar de panel (ver Layout.astro). */
+  overflow-x: hidden;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.18) transparent;
   padding-top: clamp(1.25rem, 5vw, 3.5rem);
   padding-bottom: clamp(1.25rem, 4vw, 3rem);
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  /* 'safe' evita que el centrado esconda el inicio del contenido cuando desborda */
+  justify-content: safe center;
 }
 
 @media (min-width: 640px) {
   .section-panel-content {
     padding-top: clamp(2rem, 5vw, 3.5rem);
-    padding-bottom: clamp(2rem, 4vw, 3rem);
+    padding-bottom: clamp(4.5rem, 7vw, 5.5rem);
   }
 }
 

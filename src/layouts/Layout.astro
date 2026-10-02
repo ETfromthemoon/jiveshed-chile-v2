@@ -1,56 +1,71 @@
 ---
 import '../styles/global.css';
 import { EtherealShadow } from '../components/ui/etheral-shadow';
+import type { Lang } from '../i18n/translations';
+import { translations } from '../i18n/translations';
+import { LANGS, alternatePaths, hreflang, localePath, ogLocale, stripLang } from '../i18n/utils';
 
 interface Tab { id: string; label: string; }
 interface Props {
   title?: string;
   description?: string;
   image?: string;
-  pageTabs?: Tab[];
-  lang?: string;
+  pageTabs?: readonly Tab[];
+  lang?: Lang;
+  /** false en páginas sin equivalente traducido (p. ej. 404) */
+  hasAlternates?: boolean;
 }
 
 const {
   title = 'JiveShed — From attention to action. AI INTEGRATED growth systems for Chilean businesses.',
   description = 'JiveShed builds AI INTEGRATED growth systems that connect social media, WhatsApp, Google, ads, CRM, and retention for Chilean businesses.',
-  image = '/og-image.svg',
+  image = '/og-image.png',
   pageTabs,
   lang = 'en',
+  hasAlternates = true,
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const imageURL = new URL(image, Astro.site);
+const alternates = alternatePaths(Astro.url.pathname);
 
 // Floating contact CTA — localized label + href
-const contactLabels: Record<string, string> = {
-  en: 'Schedule a call',
-  es: 'Agenda una llamada',
-  pt: 'Agende uma chamada',
-};
-const contactLabel = contactLabels[lang] ?? contactLabels.en;
-const contactHref = lang === 'en' ? '/contacto/' : `/${lang}/contacto/`;
+const contactLabel = translations[lang].nav.contacto;
+const contactHref = localePath(lang, '/contacto/');
+// En /contacto/ el CTA flotante apuntaría a la misma página y tapa el formulario
+const showContactCta = !stripLang(Astro.url.pathname).startsWith('/contacto');
 ---
 
 <!doctype html>
-<html lang={lang}>
+<html lang={hreflang(lang)}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
     <meta name="robots" content="index, follow" />
     <link rel="canonical" href={canonicalURL} />
+    {hasAlternates && LANGS.map((l) => (
+      <link rel="alternate" hreflang={hreflang(l)} href={new URL(alternates[l], Astro.site)} />
+    ))}
+    {hasAlternates && <link rel="alternate" hreflang="x-default" href={new URL(alternates.en, Astro.site)} />}
 
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={image} />
+    <meta property="og:image" content={imageURL} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:type" content="website" />
-    <meta property="og:locale" content="en_US" />
+    <meta property="og:site_name" content="JiveShed" />
+    <meta property="og:locale" content={ogLocale(lang)} />
+    {LANGS.filter((l) => l !== lang).map((l) => (
+      <meta property="og:locale:alternate" content={ogLocale(l)} />
+    ))}
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={image} />
+    <meta name="twitter:image" content={imageURL} />
 
     <!-- Inter + Crimson Text + Space Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -80,7 +95,7 @@ const contactHref = lang === 'en' ? '/contacto/' : `/${lang}/contacto/`;
     <div class="cursor-ring" id="cursor-ring" aria-hidden="true"></div>
 
     <!-- Floating Contacto CTA — visible on all pages -->
-    <a href={contactHref} class="global-contact-cta" aria-label={contactLabel}>{contactLabel}</a>
+    {showContactCta && <a href={contactHref} class="global-contact-cta">{contactLabel}</a>}
 
     <slot />
 
@@ -121,26 +136,34 @@ const contactHref = lang === 'en' ? '/contacto/' : `/${lang}/contacto/`;
         .forEach((el) => revealObserver.observe(el));
 
       // ── Custom Cursor ─────────────────────────────
+      // Solo con mouse real; en touch el CSS ya lo oculta. El anillo se anima
+      // únicamente mientras persigue al puntero (sin rAF permanente en reposo).
       const dot  = document.getElementById('cursor-dot');
       const ring = document.getElementById('cursor-ring');
+      const hasFinePointer = window.matchMedia('(pointer: fine)').matches;
+      const RING_EASE = 0.13;
+      const RING_SETTLE_PX = 0.1;
       let dotX = 0, dotY = 0;
       let ringX = 0, ringY = 0;
+      let ringFrame = 0;
 
-      if (dot && ring) {
+      function animateRing() {
+        ringX += (dotX - ringX) * RING_EASE;
+        ringY += (dotY - ringY) * RING_EASE;
+        ring!.style.left = ringX + 'px';
+        ring!.style.top  = ringY + 'px';
+        const isSettled = Math.abs(dotX - ringX) < RING_SETTLE_PX && Math.abs(dotY - ringY) < RING_SETTLE_PX;
+        ringFrame = isSettled ? 0 : requestAnimationFrame(animateRing);
+      }
+
+      if (dot && ring && hasFinePointer) {
         document.addEventListener('mousemove', (e: MouseEvent) => {
           dotX = e.clientX;
           dotY = e.clientY;
           dot.style.left = dotX + 'px';
           dot.style.top  = dotY + 'px';
+          if (!ringFrame) ringFrame = requestAnimationFrame(animateRing);
         });
-
-        (function animateRing() {
-          ringX += (dotX - ringX) * 0.13;
-          ringY += (dotY - ringY) * 0.13;
-          ring.style.left = ringX + 'px';
-          ring.style.top  = ringY + 'px';
-          requestAnimationFrame(animateRing);
-        })();
 
         document.addEventListener('mouseover', (e: MouseEvent) => {
           const target = e.target as HTMLElement;
@@ -307,10 +330,37 @@ const contactHref = lang === 'en' ? '/contacto/' : `/${lang}/contacto/`;
         // hacer scroll interno dentro del panel.
         const isDesktopViewport = () => window.matchMedia('(min-width: 1024px)').matches;
 
+        // Si el panel activo tiene más contenido que la pantalla, la rueda primero
+        // recorre ese contenido; recién al llegar al borde cambia de panel.
+        // El margen de tiempo evita que la inercia del trackpad salte de panel
+        // justo después de terminar el scroll interno.
+        const INTERNAL_SCROLL_GRACE_MS = 450;
+        let lastInternalScroll = 0;
+
+        function canScrollWithin(target: EventTarget | null, delta: number): boolean {
+          // Con el puntero sobre el rail o la barra de tabs, se evalúa igual el panel activo
+          const activeContent = '.interactive-section.is-active .section-panel-content';
+          const el = (target as HTMLElement | null)?.closest?.<HTMLElement>(activeContent)
+            ?? document.querySelector<HTMLElement>(activeContent);
+          if (!el || el.scrollHeight <= el.clientHeight + 1) return false;
+          return delta > 0
+            ? el.scrollTop + el.clientHeight < el.scrollHeight - 1
+            : el.scrollTop > 0;
+        }
+
+        function handleDelta(target: EventTarget | null, delta: number) {
+          if (canScrollWithin(target, delta)) {
+            lastInternalScroll = performance.now();
+            return;
+          }
+          if (performance.now() - lastInternalScroll < INTERNAL_SCROLL_GRACE_MS) return;
+          navigateByDelta(delta);
+        }
+
         // Wheel (desktop trackpad / mouse)
         document.addEventListener('wheel', (e: WheelEvent) => {
           if (!isDesktopViewport()) return;
-          navigateByDelta(e.deltaY);
+          handleDelta(e.target, e.deltaY);
         }, { passive: true });
 
         // Touch swipe — solo activo en desktop con touch (tablets grandes / convertibles)
@@ -322,7 +372,7 @@ const contactHref = lang === 'en' ? '/contacto/' : `/${lang}/contacto/`;
           if (!isDesktopViewport()) return;
           const delta = touchStartY - e.changedTouches[0].clientY;
           if (Math.abs(delta) < 40) return;
-          navigateByDelta(delta);
+          handleDelta(e.target, delta);
         }, { passive: true });
 
         // Activar panel inicial: el del hash (deep link) o el primero.
