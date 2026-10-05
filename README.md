@@ -20,6 +20,7 @@ Astro 6 + Tailwind 4 + React (solo para el fondo animado). Es un sitio estático
 | `/system/`    | `/es/system/`, `/pt/system/`  | El sistema JiveShed                    |
 | `/packages/`  | `/es/packages/`, …            | Los 5 paquetes (Starter → Diamond)     |
 | `/contacto/`  | `/es/contacto/`, …            | Contacto + formulario de Growth Audit  |
+| `/cases/`     | `/es/cases/`, `/pt/cases/`    | Casos: GloboScience y REGSPERTS        |
 
 ## Estructura
 
@@ -45,6 +46,14 @@ src/
 - **Cambiar correo o WhatsApp:** `src/config/site.ts`.
 - **Cambiar el dominio:** `site` en `astro.config.mjs`. El canonical, hreflang,
   la imagen OG, el sitemap y `robots.txt` salen de ahí.
+
+## Casos de éxito
+
+Los casos se editan en `src/i18n/cases.ts`, incorporado a `translations.ts`.
+`CasesView.astro` genera las tarjetas y pestañas a partir de esa lista en cada idioma.
+Para añadir un caso, completar EN/ES/PT con el mismo ID y documentar sus fuentes en
+`docs/case-studies-sources.md`. REGSPERTS se presenta como concepto demostrativo;
+no se publican métricas comerciales no verificadas. El blog permanece en pausa.
 
 ## Formulario de Growth Audit
 
