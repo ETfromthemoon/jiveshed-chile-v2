@@ -1,0 +1,108 @@
+---
+import type { Lang } from '../i18n/translations';
+import { translations } from '../i18n/translations';
+import { localePath } from '../i18n/utils';
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import InteractiveSection from '../components/InteractiveSection.astro';
+
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const c = translations[lang].cases;
+const tabs = [{ id: 'cases', label: c.title }, ...c.items.map(item => ({ id: item.id, label: item.name })), { id: 'next', label: c.next }];
+---
+
+<Layout title={`${c.title} — JiveShed`} description={c.description} lang={lang} pageTabs={tabs}>
+  <Nav lang={lang} />
+  <main>
+    <InteractiveSection id="cases" label={c.title} overlayColor="var(--js-overlay-charcoal)">
+      <div class="container-wide cases-content">
+        <p class="label-mono reveal eyebrow">{c.eyebrow} / {c.title}</p>
+        <h1 class="reveal">{c.heading} <em>{c.italic}</em></h1>
+        <p class="intro reveal">{c.intro}</p>
+        <div class="case-grid">
+          {c.items.map((item, i) => (
+            <a class="case-card reveal" href={`#panel-${item.id}`} data-open-panel={item.id}>
+              <div class="card-top"><span class="label-mono">{String(i + 1).padStart(2, '0')} / {item.sector}</span><span class="status">{item.status}</span></div>
+              <h2 class="brand">{item.name}</h2>
+              <p>{item.summary}</p>
+              <span class="card-action">{c.read} <span aria-hidden="true">↗</span></span>
+            </a>
+          ))}
+        </div>
+        <p class="more reveal">{c.more}</p>
+      </div>
+    </InteractiveSection>
+
+    {c.items.map((item, i) => (
+      <InteractiveSection id={item.id} label={item.name} overlayColor={i % 2 ? 'var(--js-overlay-coral)' : 'var(--js-overlay-blue)'}>
+        <article class="container-wide cases-content">
+          <header class="case-header reveal">
+            <div><p class="label-mono eyebrow">{String(i + 1).padStart(2, '0')} / {item.name} / {item.sector}</p><h2>{item.headline}</h2></div>
+            <span class="status">{item.status}</span>
+          </header>
+          <div class="story-grid">
+            <section class="reveal"><h3 class="label-mono">{c.context}</h3><p>{item.context}</p></section>
+            <section class="reveal"><h3 class="label-mono">{c.solution}</h3><ul>{item.solution.map(point => <li>{point}</li>)}</ul></section>
+          </div>
+          <section class="outcome reveal"><h3 class="label-mono">{c.outcome}</h3><p>{item.outcome}</p></section>
+          <div class="reveal"><p class="label-mono journey-label">{c.connection}</p><ol class="journey">{item.journey.map((step, index) => <li><span>{String(index + 1).padStart(2, '0')}</span>{step}</li>)}</ol></div>
+          <div class="case-end reveal"><p class="note">{item.note}</p><a class="case-link" href={item.url} target="_blank" rel="noopener noreferrer">{c.visit} <span aria-hidden="true">↗</span></a></div>
+        </article>
+      </InteractiveSection>
+    ))}
+
+    <InteractiveSection id="next" label={c.next} overlayColor="var(--js-overlay-green)">
+      <div class="container-wide cases-content">
+        <p class="label-mono eyebrow reveal">{c.next}</p>
+        <h2 class="closing-heading reveal">{c.nextHeading} <em>{c.nextItalic}</em></h2>
+        <p class="intro reveal">{c.nextBody}</p>
+        <a class="case-link primary reveal" href={localePath(lang, '/contacto/#auditoria')}>{c.cta} <span aria-hidden="true">↗</span></a>
+      </div>
+    </InteractiveSection>
+  </main>
+  <Footer lang={lang} />
+</Layout>
+
+<style>
+  .cases-content { width: 100%; flex-shrink: 0; display: flex; flex-direction: column; gap: clamp(1.1rem, 2.3vw, 1.8rem); }
+  h1, h2 { color: #fff; font-weight: 700; line-height: 1.08; letter-spacing: -0.035em; }
+  h1, .closing-heading { font-size: clamp(2.3rem, 6vw, 5rem); max-width: 62rem; }
+  em { font-family: var(--font-serif); font-weight: 400; }
+  .eyebrow { color: var(--js-coral); }
+  p, li { color: rgba(255,255,255,.8); line-height: 1.65; }
+  .intro { max-width: 47rem; font-size: clamp(1rem, 1.4vw, 1.15rem); }
+  .case-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 1rem; }
+  .case-card { display: flex; flex-direction: column; gap: 1rem; padding: clamp(1.2rem, 2.5vw, 2rem); border: 1px solid rgba(255,255,255,.22); background: rgba(0,0,0,.35); text-decoration: none; transition: background .2s, border-color .2s; }
+  .case-card:hover { background: rgba(0,0,0,.6); border-color: var(--js-coral); }
+  .card-top { display: flex; gap: .75rem; justify-content: space-between; flex-wrap: wrap; align-items: center; }
+  .card-top .label-mono { color: rgba(255,255,255,.65); font-size: .6rem; }
+  .brand { font-size: clamp(1.8rem, 3vw, 2.6rem); }
+  .card-action { margin-top: auto; padding-top: .5rem; color: var(--js-coral); font-family: var(--font-mono); font-size: .7rem; display: flex; justify-content: space-between; }
+  .status { border: 1px solid rgba(255,255,255,.3); padding: .3rem .5rem; font-size: .65rem; color: var(--js-off-white); width: fit-content; }
+  .more, .note { color: rgba(255,255,255,.65); font-size: .8rem; }
+  .case-header { display: flex; justify-content: space-between; gap: 1rem; align-items: flex-start; }
+  .case-header h2 { font-size: clamp(1.7rem, 3.2vw, 3rem); max-width: 54rem; margin-top: .65rem; }
+  .case-header .status { flex-shrink: 0; }
+  .story-grid { display: grid; grid-template-columns: .85fr 1.15fr; gap: clamp(1.5rem, 4vw, 4rem); }
+  h3, .journey-label { color: rgba(255,255,255,.65); margin-bottom: .65rem; }
+  .story-grid p, .story-grid li, .outcome p { font-size: .92rem; }
+  ul { padding-left: 1rem; list-style: disc; }
+  li + li { margin-top: .5rem; }
+  .outcome { border-left: 2px solid var(--js-signal-green); background: rgba(0,0,0,.25); padding: 1rem 1.25rem; }
+  .journey { display: grid; grid-template-columns: repeat(3,1fr); border-top: 1px solid rgba(255,255,255,.2); list-style: none; padding: 0; }
+  .journey li { display: flex; align-items: baseline; gap: .75rem; margin: 0; padding: .65rem .75rem .2rem 0; font-size: .85rem; }
+  .journey span { font-family: var(--font-mono); font-size: .65rem; color: var(--js-coral); }
+  .case-end { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; }
+  .note { max-width: 51rem; }
+  .case-link { display: inline-flex; align-items: center; gap: 1.5rem; padding: .9rem 1.2rem; border: 1px solid rgba(255,255,255,.6); font-family: var(--font-mono); font-size: .7rem; color: white; text-decoration: none; flex-shrink: 0; width: fit-content; }
+  .case-link:hover { background: #fff; color: #000; }
+  .primary { background: var(--js-signal-green); color: #000; border-color: var(--js-signal-green); }
+  @media (max-width: 767px) {
+    .case-grid, .story-grid { grid-template-columns: 1fr; }
+    .case-header, .case-end { flex-direction: column; align-items: flex-start; }
+    .journey { grid-template-columns: 1fr; }
+    .case-header .label-mono { line-height: 1.7; }
+  }
+</style>

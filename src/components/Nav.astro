@@ -6,6 +6,7 @@ import { LANGS, alternatePaths, localePath } from '../i18n/utils';
 interface Props { lang?: Lang; }
 const { lang = 'en' } = Astro.props;
 const t = translations[lang].nav;
+const cases = translations[lang].cases;
 
 const pathname = Astro.url.pathname;
 const langUrls = alternatePaths(pathname);
@@ -15,6 +16,12 @@ const auditHref = localePath(lang, '/contacto/#auditoria');
 const isActive = (href: string) => (href === homeHref ? pathname === homeHref : pathname.startsWith(href));
 
 const links = [
+  {
+    label: cases.title,
+    short: cases.short,
+    href: localePath(lang, '/cases/'),
+    icon: `<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="15" rx="2"/><path d="M8 6V3h8v3M3 12h18M10 12v3h4v-3"/></svg>`,
+  },
   {
     label: t.system,
     short: t.system,
@@ -287,7 +294,7 @@ const links = [
   box-shadow: 0 -4px 24px rgba(0,0,0,0.4);
   flex-direction: row;
   align-items: stretch;
-  justify-content: center;
+  justify-content: flex-start;
   overflow-x: auto;
   scrollbar-width: none;
 }

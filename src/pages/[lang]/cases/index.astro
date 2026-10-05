@@ -1,0 +1,10 @@
+---
+import type { Lang } from '../../../i18n/translations';
+import { PREFIXED_LANGS } from '../../../i18n/utils';
+import CasesView from '../../../views/CasesView.astro';
+export function getStaticPaths() {
+  return PREFIXED_LANGS.map(lang => ({ params: { lang } }));
+}
+const { lang } = Astro.params as { lang: Lang };
+---
+<CasesView lang={lang} />

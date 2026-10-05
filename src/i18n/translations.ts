@@ -1,7 +1,9 @@
+import { caseStudies } from './cases';
 export type Lang = 'en' | 'es' | 'pt';
 
 export const translations = {
   en: {
+    cases: caseStudies.en,
     nav: {
       home: 'Home', system: 'System', packages: 'Packages',
       contacto: 'Schedule a call', growthAudit: 'Growth Audit',
@@ -217,6 +219,7 @@ export const translations = {
   },
 
   es: {
+    cases: caseStudies.es,
     nav: {
       home: 'Inicio', system: 'Sistema', packages: 'Paquetes',
       contacto: 'Agenda una llamada', growthAudit: 'Auditoría Gratuita',
@@ -432,6 +435,7 @@ export const translations = {
   },
 
   pt: {
+    cases: caseStudies.pt,
     nav: {
       home: 'Início', system: 'Sistema', packages: 'Pacotes',
       contacto: 'Agende uma chamada', growthAudit: 'Auditoria Gratuita',
