@@ -48,7 +48,7 @@ const tabs = [{ id: 'cases', label: c.title }, ...c.items.map(item => ({ id: ite
           </div>
           <section class="outcome reveal"><h3 class="label-mono">{c.outcome}</h3><p>{item.outcome}</p></section>
           <div class="reveal"><p class="label-mono journey-label">{c.connection}</p><ol class="journey">{item.journey.map((step, index) => <li><span>{String(index + 1).padStart(2, '0')}</span>{step}</li>)}</ol></div>
-          <div class="case-end reveal"><p class="note">{item.note}</p><a class="case-link" href={item.url} target="_blank" rel="noopener noreferrer">{c.visit} <span aria-hidden="true">↗</span></a></div>
+          <div class="case-end reveal"><p class="note">{item.note}</p>{'url' in item && item.url && <a class="case-link" href={item.url} target="_blank" rel="noopener noreferrer">{c.visit} <span aria-hidden="true">↗</span></a>}</div>
         </article>
       </InteractiveSection>
     ))}

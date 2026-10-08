@@ -1,11 +1,13 @@
+import { fictionalCases } from './fictional-cases';
+
 // Editorial claims and sources: docs/case-studies-sources.md.
 // Add future cases to every locale; the page and section navigation are derived from this list.
 export const caseStudies = {
   es: {
     title: 'Casos de éxito', short: 'Casos', eyebrow: 'Trabajo seleccionado',
     heading: 'De la experiencia', italic: 'a la acción.',
-    intro: 'Dos proyectos digitales para negocios especializados. Una misma idea: explicar el valor, construir confianza y facilitar el siguiente paso.',
-    description: 'Explora GloboScience y REGSPERTS: dos casos de diseño web, posicionamiento y recorridos de contacto para negocios especializados.',
+    intro: 'Dos proyectos digitales y tres ejemplos ficticios para clínicas chilenas. Cada uno muestra cómo conectar confianza, contenido y un siguiente paso claro.',
+    description: 'Explora GloboScience y REGSPERTS, y tres escenarios ficticios para implantes dentales, medicina estética y dermatología en Chile.',
     read: 'Explorar caso', visit: 'Ver proyecto', context: 'El contexto', solution: 'La solución digital', outcome: 'Qué hace posible',
     connection: 'De la atención a la acción', next: 'Tu próximo paso', cta: 'Solicitar una auditoría',
     nextHeading: 'Tu experiencia merece', nextItalic: 'una web que la explique.',
@@ -40,13 +42,14 @@ export const caseStudies = {
         journey: ['Elegir el perfil', 'Entender el método', 'Iniciar una conversación'],
         note: 'La web se identifica como demostración. El formulario abre el correo y no almacena datos en el sitio. No hay métricas verificadas de contrataciones o conversión para este caso.',
       },
+      ...fictionalCases.es,
     ],
   },
   en: {
     title: 'Success stories', short: 'Cases', eyebrow: 'Selected work',
     heading: 'From expertise', italic: 'to action.',
-    intro: 'Two digital projects for specialist businesses. One shared idea: explain the value, build trust, and make the next step clear.',
-    description: 'Explore GloboScience and REGSPERTS: web design, positioning, and inquiry journeys for specialist businesses.',
+    intro: 'Two digital projects and three fictional examples for Chilean clinics. Each shows how to connect trust, content and a clear next step.',
+    description: 'Explore GloboScience and REGSPERTS, plus three fictional scenarios for dental implants, aesthetic medicine and dermatology in Chile.',
     read: 'Explore case', visit: 'Visit project', context: 'The context', solution: 'The digital solution', outcome: 'What it enables',
     connection: 'From attention to action', next: 'Your next step', cta: 'Request a growth audit',
     nextHeading: 'Your expertise deserves', nextItalic: 'a website that explains it.',
@@ -81,13 +84,14 @@ export const caseStudies = {
         journey: ['Choose your path', 'Understand the method', 'Start a conversation'],
         note: 'The website identifies itself as a demonstration. Its form opens an email client and does not store data on the site. No verified hiring or conversion metrics are available for this case.',
       },
+      ...fictionalCases.en,
     ],
   },
   pt: {
     title: 'Casos de sucesso', short: 'Casos', eyebrow: 'Trabalhos selecionados',
     heading: 'Da experiência', italic: 'à ação.',
-    intro: 'Dois projetos digitais para negócios especializados. Uma ideia em comum: explicar o valor, construir confiança e facilitar o próximo passo.',
-    description: 'Conheça GloboScience e REGSPERTS: design web, posicionamento e percursos de contato para negócios especializados.',
+    intro: 'Dois projetos digitais e três exemplos fictícios para clínicas chilenas. Cada um mostra como conectar confiança, conteúdo e um próximo passo claro.',
+    description: 'Conheça GloboScience e REGSPERTS, além de três cenários fictícios para implantes dentários, medicina estética e dermatologia no Chile.',
     read: 'Explorar caso', visit: 'Ver projeto', context: 'O contexto', solution: 'A solução digital', outcome: 'O que possibilita',
     connection: 'Da atenção à ação', next: 'Seu próximo passo', cta: 'Solicitar uma auditoria',
     nextHeading: 'Sua experiência merece', nextItalic: 'um site que a explique.',
@@ -122,6 +126,7 @@ export const caseStudies = {
         journey: ['Escolher o perfil', 'Entender o método', 'Iniciar uma conversa'],
         note: 'O site se identifica como demonstração. O formulário abre o e-mail e não armazena dados no site. Não há métricas verificadas de contratações ou conversão para este caso.',
       },
+      ...fictionalCases.pt,
     ],
   },
 };
