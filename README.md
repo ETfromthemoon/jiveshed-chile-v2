@@ -57,6 +57,14 @@ Para añadir un caso, completar EN/ES/PT con el mismo ID y documentar sus fuente
 los escenarios de clínicas se identifican como ficticios y no llevan enlaces de cliente
 ni métricas comerciales no verificadas. El blog permanece en pausa.
 
+La compilación valida cada caso antes de publicarlo: ID apto para la URL y único,
+mismo orden en los tres idiomas, textos y pasos completos, y enlace HTTP(S) absoluto
+cuando corresponde. Si falla, `npm run build` indica el idioma, caso y campo a corregir.
+`npm run test:cases` comprueba estas reglas y `npm run verify:cases` construye las
+tres versiones y verifica que tarjetas, paneles y pestañas correspondan uno a uno.
+La vista adapta sus columnas y ajusta textos largos en celular. Antes de aprobar
+contenido nuevo, revisar también la página en móvil y escritorio.
+
 ## Formulario de Growth Audit
 
 `src/components/AuditForm.astro` no necesita backend: arma un mensaje con los datos
