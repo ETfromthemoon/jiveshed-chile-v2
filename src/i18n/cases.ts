@@ -1,4 +1,5 @@
 import { fictionalCases } from './fictional-cases';
+import { validateCaseStudies } from './validate-cases.mjs';
 
 // Editorial claims and sources: docs/case-studies-sources.md.
 // Add future cases to every locale; the page and section navigation are derived from this list.
@@ -6,8 +7,8 @@ export const caseStudies = {
   es: {
     title: 'Casos de éxito', short: 'Casos', eyebrow: 'Trabajo seleccionado',
     heading: 'De la experiencia', italic: 'a la acción.',
-    intro: 'Dos proyectos digitales y tres ejemplos ficticios para clínicas chilenas. Cada uno muestra cómo conectar confianza, contenido y un siguiente paso claro.',
-    description: 'Explora GloboScience y REGSPERTS, y tres escenarios ficticios para implantes dentales, medicina estética y dermatología en Chile.',
+    intro: 'Proyectos digitales y escenarios ficticios para clínicas chilenas. Cada historia muestra cómo conectar confianza, contenido y un siguiente paso claro.',
+    description: 'Explora proyectos digitales y escenarios ficticios para clínicas chilenas: diseño web, contenido y recorridos de contacto.',
     read: 'Explorar caso', visit: 'Ver proyecto', context: 'El contexto', solution: 'La solución digital', outcome: 'Qué hace posible',
     connection: 'De la atención a la acción', next: 'Tu próximo paso', cta: 'Solicitar una auditoría',
     nextHeading: 'Tu experiencia merece', nextItalic: 'una web que la explique.',
@@ -48,8 +49,8 @@ export const caseStudies = {
   en: {
     title: 'Success stories', short: 'Cases', eyebrow: 'Selected work',
     heading: 'From expertise', italic: 'to action.',
-    intro: 'Two digital projects and three fictional examples for Chilean clinics. Each shows how to connect trust, content and a clear next step.',
-    description: 'Explore GloboScience and REGSPERTS, plus three fictional scenarios for dental implants, aesthetic medicine and dermatology in Chile.',
+    intro: 'Digital projects and fictional scenarios for Chilean clinics. Each story shows how to connect trust, content and a clear next step.',
+    description: 'Explore digital projects and fictional scenarios for Chilean clinics: web design, content and inquiry journeys.',
     read: 'Explore case', visit: 'Visit project', context: 'The context', solution: 'The digital solution', outcome: 'What it enables',
     connection: 'From attention to action', next: 'Your next step', cta: 'Request a growth audit',
     nextHeading: 'Your expertise deserves', nextItalic: 'a website that explains it.',
@@ -90,8 +91,8 @@ export const caseStudies = {
   pt: {
     title: 'Casos de sucesso', short: 'Casos', eyebrow: 'Trabalhos selecionados',
     heading: 'Da experiência', italic: 'à ação.',
-    intro: 'Dois projetos digitais e três exemplos fictícios para clínicas chilenas. Cada um mostra como conectar confiança, conteúdo e um próximo passo claro.',
-    description: 'Conheça GloboScience e REGSPERTS, além de três cenários fictícios para implantes dentários, medicina estética e dermatologia no Chile.',
+    intro: 'Projetos digitais e cenários fictícios para clínicas chilenas. Cada história mostra como conectar confiança, conteúdo e um próximo passo claro.',
+    description: 'Conheça projetos digitais e cenários fictícios para clínicas chilenas: design web, conteúdo e percursos de contato.',
     read: 'Explorar caso', visit: 'Ver projeto', context: 'O contexto', solution: 'A solução digital', outcome: 'O que possibilita',
     connection: 'Da atenção à ação', next: 'Seu próximo passo', cta: 'Solicitar uma auditoria',
     nextHeading: 'Sua experiência merece', nextItalic: 'um site que a explique.',
@@ -130,3 +131,5 @@ export const caseStudies = {
     ],
   },
 };
+
+validateCaseStudies(caseStudies);
